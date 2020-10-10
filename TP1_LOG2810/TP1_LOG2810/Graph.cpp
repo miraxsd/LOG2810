@@ -45,7 +45,7 @@ void Graph::lireGraph()
 			{
 			if (sommet.getIdentifiant() == arc.getSommetDepart())
 				std::cout << arc.getSommetArrive();
-				if (arc.getSommetArrive!=arcs.back().getSommetArrive())
+				if (arc.getSommetArrive()!=arcs.back().getSommetArrive())
 					std::cout << ", ";
 			}
 		std::cout << "))" << std::endl;
