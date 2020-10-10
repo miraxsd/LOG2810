@@ -33,7 +33,6 @@ Graph Graph::creerGraph(std::string nomFichier)
 		fichier.close();
 	}
 	else std::cout << "Unable to open file";
-	
 
 	return *this;
 }
