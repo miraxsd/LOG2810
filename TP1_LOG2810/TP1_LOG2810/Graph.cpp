@@ -2,7 +2,7 @@
 
 Graph Graph::creerGraph(std::ifstream fichier)
 {
-	std::ofstream fihier1;
+	std::ofstream fichier;
 
 	return Graph();
 }
