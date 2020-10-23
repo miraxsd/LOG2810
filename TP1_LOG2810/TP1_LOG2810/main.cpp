@@ -7,12 +7,6 @@
 
 using namespace std;
 
-/*struct Caracteristiques {
-	string carburant;
-	int autonomieMax = 0;
-	int autonomieActu = 0;
-};*/
-
 
 Vehicule demanderCaracteristiques() {
 
@@ -33,7 +27,7 @@ Vehicule demanderCaracteristiques() {
 
 	std::cout << "Autonomie actuelle : ";
 	cin >> caracteristique.autonomieActu;
-	VVehicule vehicule(caracteristique);
+	Vehicule vehicule(caracteristique);
 	return vehicule;
 }
 
@@ -47,8 +41,10 @@ void menuPrincipal() {
 
 	bool exit = false;
 	char choix;
-	string nomNouveauFichier, nomFichier;
-	ifstream fichier, nouveauFichier;
+	string nomNouveauFichier;
+	string nomFichier;
+	ifstream fichier;
+	ifstream nouveauFichier;
 	bool invalide = false;
 	bool choixAchoisi = true;
 
@@ -80,9 +76,9 @@ void menuPrincipal() {
 				cout << "Veuillez entrer le nom du fichier contenant la nouvelle carte: " << endl << endl;
 				invalide = true;
 				cin >> nomNouveauFichier;
-				//nouveauFichier.open(nomNouveauFichier);
+				nouveauFichier.open(nomNouveauFichier);
 			} while (!nouveauFichier.is_open());
-			graph.creerGraph(nomNouveauFichier);
+			graph.creerGraph(nouveauFichier);
 			break;
 
 		case 'c':
@@ -121,6 +117,14 @@ void menuPrincipal() {
 
 int main() {
 
-	menuPrincipal();
+	//menuPrincipal();
+	string nomFichier = "graphe.txt";
+	ifstream fichier;
+	fichier.open(nomFichier);
+
+	Graph graph;
+	graph.creerGraph(fichier);
+
+	graph.lireGraph();
 
 }

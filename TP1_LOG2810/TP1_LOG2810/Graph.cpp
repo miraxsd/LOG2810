@@ -4,10 +4,10 @@
 #include <fstream>
 #include <sstream>
 
-Graph Graph::creerGraph(std::string nomFichier)
+Graph Graph::creerGraph(std::ifstream& fichier)
 {
-	std::ifstream fichier;
-	fichier.open(nomFichier + ".txt");
+	/*std::ifstream fichier;
+	fichier.open(nomFichier + ".txt");*/
 	std::string ligne1 = "";
 	std::string ligne2 = "";
 	
@@ -24,8 +24,8 @@ Graph Graph::creerGraph(std::string nomFichier)
 		}
 		while (!line2.eof())
 		{
-			Sommet* sommetDepart;
-			Sommet* sommetArrive;
+			Sommet* sommetDepart=nullptr;
+			Sommet* sommetArrive=nullptr;
 			getline(line2, identifiantSommetDepart, ',');
 			getline(line2, identifiantSommetArrive, ',');
 			getline(line2, distance, ';');

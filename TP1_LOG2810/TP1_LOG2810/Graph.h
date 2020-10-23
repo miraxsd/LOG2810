@@ -1,4 +1,8 @@
+#pragma once
+
+#ifndef GRAPHE_H
 #define GRAPH_H 
+
 #include <iomanip>
 #include <iostream>
 #include <fstream>
@@ -10,10 +14,12 @@
 class Graph {
 public:
 	Graph() :sommets(std::vector<Sommet>()), arcs(std::vector<Arc>()) {};
-	Graph creerGraph (std::string);
+	Graph creerGraph (std::ifstream&);
 	void lireGraph();
 	Graph extractionGraph(Vehicule vehicule);
 private:
 	std::vector<Sommet> sommets;
 	std::vector<Arc> arcs;
 };
+
+#endif GRAPHE_H

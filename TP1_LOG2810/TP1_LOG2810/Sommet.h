@@ -1,3 +1,7 @@
+#pragma once
+
+#ifndef SOMMET_H
+
 #define SOMMET_H 
 #include <iomanip>
 #include <iostream>
@@ -13,3 +17,5 @@ private :
 	std::string type_;
 
 };
+
+#endif SOMMET_H
