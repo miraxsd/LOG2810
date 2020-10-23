@@ -34,6 +34,4 @@ private:
 	
 
 };
-
-
 #endif

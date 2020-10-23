@@ -1,5 +1,6 @@
-#ifndef GRAPH_H
-#define GRAPH_H
+#ifndef GRAPHE_H
+#define GRAPH_H 
+
 #include <iomanip>
 #include <iostream>
 #include <fstream>
@@ -19,3 +20,4 @@ private:
 	std::vector<Arc> arcs;
 };
 #endif
+

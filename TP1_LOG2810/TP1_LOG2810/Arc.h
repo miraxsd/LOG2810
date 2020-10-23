@@ -1,5 +1,6 @@
 #ifndef ARC_H
 #define ARC_H
+
 #include <iomanip>
 #include <iostream>
 #include <fstream>

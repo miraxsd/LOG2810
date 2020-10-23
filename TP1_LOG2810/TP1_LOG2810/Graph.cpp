@@ -6,8 +6,6 @@
 
 Graph Graph::creerGraph(std::ifstream& fichier)
 {
-	//std::ifstream fichier;
-	//fichier.open(nomFichier + ".txt");
 	std::string ligne1 = "";
 	std::string ligne2 = "";
 	
