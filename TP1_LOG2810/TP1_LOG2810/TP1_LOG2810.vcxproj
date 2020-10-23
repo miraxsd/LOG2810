@@ -126,7 +126,7 @@
     <ClInclude Include="Graph.h" />
     <ClInclude Include="Arc.h" />
     <ClInclude Include="Sommet.h" />
-    <ClInclude Include="Voiture.h" />
+    <ClInclude Include="Vehicule.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Graph.cpp" />

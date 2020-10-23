@@ -7,11 +7,10 @@
 Graph Graph::creerGraph(std::string nomFichier)
 {
 	std::ifstream fichier;
-	fichier.open(nomFichier + "txt");
+	fichier.open(nomFichier + ".txt");
 	std::string ligne1 = "";
 	std::string ligne2 = "";
-	if (fichier.is_open())
-	{
+	
 		std::string identifiant, type, identifiantSommetDepart, identifiantSommetArrive,distance;
 		getline(fichier, ligne1);
 		std::stringstream line1(ligne1);
@@ -25,14 +24,22 @@ Graph Graph::creerGraph(std::string nomFichier)
 		}
 		while (!line2.eof())
 		{
+			Sommet* sommetDepart;
+			Sommet* sommetArrive;
 			getline(line2, identifiantSommetDepart, ',');
 			getline(line2, identifiantSommetArrive, ',');
-			getline(line2,distance,';');
-			arcs.push_back(Arc(identifiantSommetDepart,identifiantSommetArrive,std::stoi(distance)));
+			getline(line2, distance, ';');
+			for (Sommet sommet : sommets)
+			{
+				if (identifiantSommetDepart == sommet.getIdentifiant())
+					sommetDepart = &sommet;
+				if (identifiantSommetArrive == sommet.getIdentifiant())
+					sommetArrive = &sommet;
+			}
+			arcs.push_back(Arc(sommetDepart,sommetArrive,std::stoi(distance)));
 		}
 		fichier.close();
-	}
-	else std::cout << "Unable to open file";
+	
 
 	return *this;
 }
@@ -43,9 +50,9 @@ void Graph::lireGraph()
 		std::cout <<"(" << sommet.getIdentifiant() << ", " << sommet.getType() << "( ";
 		for(Arc arc:arcs)
 			{
-			if (sommet.getIdentifiant() == arc.getSommetDepart())
+			if (sommet.getIdentifiant() == arc.getSommetDepart()->getIdentifiant())
 				std::cout << arc.getSommetArrive();
-				if (arc.getSommetArrive()!=arcs.back().getSommetArrive())
+				if (arc.getSommetArrive()->getIdentifiant()!=arcs.back().getSommetArrive()->getIdentifiant())
 					std::cout << ", ";
 			}
 		std::cout << "))" << std::endl;
@@ -53,19 +60,26 @@ void Graph::lireGraph()
 	
 }
 
-Graph Graph::extractionGraph( Voiture voiture )
+Graph Graph::extractionGraph(Vehicule vehicule)
 {
 	Graph sousGraph;
-	for (Sommet sommet:sommets)
+	/*for (Sommet sommet : sommets)
 	{
-		for(Arc arc:arcs)
+
+		while()
+	//for (Arc arc : arcs)
+		/*{
+			if ((sommet.getIdentifiant() == arc.getSommetDepart()->getIdentifiant()) && (arc.getDistance() < vehicule.getAutonomieActuelle()))
 			{
-				if ((sommet.getIdentifiant() == arc.getSommetDepart()) && (arc.getDistance() < voiture.getAutonomieMaximale()))
-				{
-					sousGraph.sommets.push_back(sommet);
-					sousGraph.arcs.push_back(arc);
-				}
-	}
+				sousGraph.sommets.push_back(sommet);
+				sousGraph.arcs.push_back(arc);
+				vehicule.autonomieRestante(arc.getDistance());
+				if ((arc.getSommetArrive()->getType() == vehicule.getType()) || ((vehicule.getType() == "hybrid") && (arc.getSommetArrive()->getType() != "null")) || (arc.getSommetArrive()->getType() == "multi"))
+					vehicule.rechargerAutonomie();
+			}
+		}*/
 		return sousGraph;
 }
+
+
 

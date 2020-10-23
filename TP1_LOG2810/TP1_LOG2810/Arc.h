@@ -5,13 +5,13 @@
 #include "Sommet.h"
 class Arc {
 public:
-	Arc(std::string sommetDepart, std::string sommetArrive, int distance) :sommetDepart_(sommetDepart),sommetArrive_(sommetArrive),distance_(distance) {};
-	std::string getSommetDepart(){return sommetDepart_;};
-	std::string getSommetArrive(){return sommetArrive_;};
+	Arc(Sommet* sommetDepart, Sommet* sommetArrive, int distance) :sommetDepart_(sommetDepart),sommetArrive_(sommetArrive),distance_(distance) {};
+	Sommet* getSommetDepart(){return sommetDepart_;};
+	Sommet* getSommetArrive(){return sommetArrive_;};
 	int getDistance() { return distance_; };
 private:
 	
-	std::string sommetDepart_;
-	std::string sommetArrive_;
+	Sommet* sommetDepart_;
+	Sommet* sommetArrive_;
 	int distance_;
 };

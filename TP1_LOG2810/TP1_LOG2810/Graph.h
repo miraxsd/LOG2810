@@ -5,13 +5,14 @@
 #include <vector>
 #include "Sommet.h"
 #include "Arc.h"
-#include "Voiture.h"
+#include "Vehicule.h"
 
 class Graph {
 public:
+	Graph() :sommets(std::vector<Sommet>()), arcs(std::vector<Arc>()) {};
 	Graph creerGraph (std::string);
 	void lireGraph();
-	Graph extractionGraph(Voiture);
+	Graph extractionGraph(Vehicule vehicule);
 private:
 	std::vector<Sommet> sommets;
 	std::vector<Arc> arcs;
