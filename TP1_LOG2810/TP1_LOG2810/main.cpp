@@ -33,7 +33,7 @@ Vehicule demanderCaracteristiques() {
 
 	std::cout << "Autonomie actuelle : ";
 	cin >> caracteristique.autonomieActu;
-	VVehicule vehicule(caracteristique);
+	Vehicule vehicule(caracteristique);
 	return vehicule;
 }
 
@@ -82,7 +82,7 @@ void menuPrincipal() {
 				cin >> nomNouveauFichier;
 				//nouveauFichier.open(nomNouveauFichier);
 			} while (!nouveauFichier.is_open());
-			graph.creerGraph(nomNouveauFichier);
+			graph.creerGraph(nouveauFichier);
 			break;
 
 		case 'c':
@@ -120,7 +120,24 @@ void menuPrincipal() {
 }
 
 int main() {
-
-	menuPrincipal();
-
+	bool exit = false;
+	char choix;
+	string nomNouveauFichier, nomFichier;
+	ifstream fichier, nouveauFichier;
+	bool invalide = false;
+	bool choixAchoisi = true;
+	invalide = false;
+	Graph graph;
+	Vehicule vehicule;
+	//menuPrincipal();
+	do {
+		if (invalide)
+			cout << "le fichier " << nomNouveauFichier << " est introuvable." << endl;
+		cout << "Veuillez entrer le nom du fichier contenant la nouvelle carte: " << endl << endl;
+		invalide = true;
+		cin >> nomNouveauFichier;
+		nouveauFichier.open(nomNouveauFichier);
+	} while (!nouveauFichier.is_open());
+	graph.creerGraph(nouveauFichier);
+	graph.lireGraph();
 }

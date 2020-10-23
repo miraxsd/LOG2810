@@ -4,10 +4,10 @@
 #include <fstream>
 #include <sstream>
 
-Graph Graph::creerGraph(std::string nomFichier)
+Graph Graph::creerGraph(std::ifstream& fichier)
 {
-	std::ifstream fichier;
-	fichier.open(nomFichier + ".txt");
+	//std::ifstream fichier;
+	//fichier.open(nomFichier + ".txt");
 	std::string ligne1 = "";
 	std::string ligne2 = "";
 	
@@ -24,16 +24,16 @@ Graph Graph::creerGraph(std::string nomFichier)
 		}
 		while (!line2.eof())
 		{
-			Sommet* sommetDepart;
-			Sommet* sommetArrive;
+			Sommet* sommetDepart=nullptr;
+			Sommet* sommetArrive=nullptr;
 			getline(line2, identifiantSommetDepart, ',');
 			getline(line2, identifiantSommetArrive, ',');
 			getline(line2, distance, ';');
-			for (Sommet sommet : sommets)
+			for (Sommet& sommet : sommets)
 			{
-				if (identifiantSommetDepart == sommet.getIdentifiant())
+				if (identifiantSommetDepart == sommet.getId())
 					sommetDepart = &sommet;
-				if (identifiantSommetArrive == sommet.getIdentifiant())
+				if (identifiantSommetArrive == sommet.getId())
 					sommetArrive = &sommet;
 			}
 			arcs.push_back(Arc(sommetDepart,sommetArrive,std::stoi(distance)));
@@ -47,14 +47,17 @@ void Graph::lireGraph()
 {
 	for (Sommet sommet:sommets)
 	{
-		std::cout <<"(" << sommet.getIdentifiant() << ", " << sommet.getType() << "( ";
+		std::cout <<"(" << sommet.getId() << ", " << sommet.getType() << "( ";
 		for(Arc arc:arcs)
 			{
-			if (sommet.getIdentifiant() == arc.getSommetDepart()->getIdentifiant())
-				std::cout << arc.getSommetArrive();
-				if (arc.getSommetArrive()->getIdentifiant()!=arcs.back().getSommetArrive()->getIdentifiant())
+			if (sommet.getId() == arc.getSommetDepart()->getId())
+			{
+				std::cout << arc.getSommetArrive()->getId();
+				if (arc.getSommetArrive()->getId()!=arcs.back().getSommetArrive()->getId())
 					std::cout << ", ";
 			}
+			}
+
 		std::cout << "))" << std::endl;
 	}
 	

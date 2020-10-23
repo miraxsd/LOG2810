@@ -1,3 +1,4 @@
+#ifndef VEHICULE_H
 #define VEHICULE_H
 #include <iomanip>
 #include <iostream>
@@ -35,3 +36,4 @@ private:
 };
 
 
+#endif

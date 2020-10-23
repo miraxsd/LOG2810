@@ -1,4 +1,5 @@
-#define ARC_H 
+#ifndef ARC_H
+#define ARC_H
 #include <iomanip>
 #include <iostream>
 #include <fstream>
@@ -15,3 +16,4 @@ private:
 	Sommet* sommetArrive_;
 	int distance_;
 };
+#endif
