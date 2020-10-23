@@ -20,7 +20,8 @@ Graph Graph::creerGraph(std::ifstream& fichier)
 		{
 			getline(line1, identifiant, ',');
 			getline(line1, type, ';');
-			sommets.push_back(Sommet(identifiant, type));
+			if(identifiant!="")
+				sommets.push_back(Sommet(identifiant, type));
 		}
 		while (!line2.eof())
 		{
@@ -29,14 +30,18 @@ Graph Graph::creerGraph(std::ifstream& fichier)
 			getline(line2, identifiantSommetDepart, ',');
 			getline(line2, identifiantSommetArrive, ',');
 			getline(line2, distance, ';');
+			if((identifiantSommetDepart!="") && (identifiantSommetArrive!="")  )
+			{
 			for (Sommet& sommet : sommets)
 			{
-				if (identifiantSommetDepart == sommet.getId())
+				if (identifiantSommetDepart == sommet.getId() && sommetDepart==nullptr)
 					sommetDepart = &sommet;
-				if (identifiantSommetArrive == sommet.getId())
+				if (identifiantSommetArrive == sommet.getId() && sommetArrive == nullptr)
 					sommetArrive = &sommet;
+				
 			}
-			arcs.push_back(Arc(sommetDepart,sommetArrive,std::stoi(distance)));
+				arcs.push_back(Arc(sommetDepart,sommetArrive,std::stoi(distance)));
+			}
 		}
 		fichier.close();
 	
