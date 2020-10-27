@@ -48,17 +48,20 @@ Graph Graph::creerGraph(std::ifstream& fichier)
 }
 void Graph::lireGraph()
 {
+	
 	for (Sommet sommet:sommets)
 	{
-		std::cout <<"(" << sommet.getId() << ", " << sommet.getType() << "( ";
+		bool premierArc = true;
+		std::cout <<"(" << sommet.getId() << ", " << sommet.getType() << "(";
 		for(Arc arc:arcs)
 			{
-			if (sommet.getId() == arc.getSommetDepart()->getId())
-			{
-				std::cout << arc.getSommetArrive()->getId();
-				if (arc.getSommetArrive()->getId()!=arcs.back().getSommetArrive()->getId())
-					std::cout << ", ";
-			}
+				if (sommet.getId() == arc.getSommetDepart()->getId())
+				{
+					if (!premierArc)
+						std::cout << ", ";
+					premierArc = false;
+					std::cout << arc.getSommetArrive()->getId();
+				}
 			}
 
 		std::cout << "))" << std::endl;
@@ -66,25 +69,44 @@ void Graph::lireGraph()
 	
 }
 
-Graph Graph::extractionGraph(Vehicule vehicule)
+Graph Graph::extractionGraph(Sommet sommetDebut, Vehicule vehicule)
 {
 	Graph sousGraph;
-	/*for (Sommet sommet : sommets)
-	{
+	Graph sousGraphPlusLong;
+	int distanceParcourue = 0;
+	int distancePlusLongue = 0;
+	std::vector<Arc> arcsParcourus;
+	bool nouveauArc = true;
+	/*for (Sommet sommet:sommets)
+		while()*/
+	Sommet sommetDepart = sommetDebut;
 
-		while()
-	//for (Arc arc : arcs)
-		/*{
-			if ((sommet.getIdentifiant() == arc.getSommetDepart()->getIdentifiant()) && (arc.getDistance() < vehicule.getAutonomieActuelle()))
+	for (Arc arc : arcs)
+	{
+		for (Arc arcPrecedent : arcsParcourus)
+			if (arc.getSommetDepart() == arcPrecedent.getSommetDepart() && arc.getSommetArrive() == arcPrecedent.getSommetArrive() && arc.getDistance() == arcPrecedent.getDistance())
+				nouveauArc = false;
+		if(nouveauArc)
+			if ((sommetDepart.getId() == arc.getSommetDepart()->getId()) && (arc.getDistance() <= vehicule.getAutonomieActuelle()))
 			{
-				sousGraph.sommets.push_back(sommet);
-				sousGraph.arcs.push_back(arc);
-				vehicule.autonomieRestante(arc.getDistance());
-				if ((arc.getSommetArrive()->getType() == vehicule.getType()) || ((vehicule.getType() == "hybrid") && (arc.getSommetArrive()->getType() != "null")) || (arc.getSommetArrive()->getType() == "multi"))
-					vehicule.rechargerAutonomie();
-			}
-		}*/
-		return sousGraph;
+					sousGraph.sommets.push_back(sommetDepart);
+					sousGraph.arcs.push_back(arc);
+					vehicule.autonomieRestante(arc.getDistance());
+					distanceParcourue += arc.getDistance();
+					arcsParcourus.push_back(arc);
+					if ((arc.getSommetArrive()->getType() == vehicule.getType()) || ((vehicule.getType() == "hybrid") && (arc.getSommetArrive()->getType() != "null")) || (arc.getSommetArrive()->getType() == "multi"))
+						vehicule.rechargerAutonomie();
+					
+
+
+				}
+	}
+	if (distancePlusLongue < distanceParcourue)
+	{
+		sousGraphPlusLong = sousGraph;
+		distancePlusLongue = distanceParcourue;
+	}	
+	return sousGraph;
 }
 
 

@@ -14,7 +14,7 @@ public:
 	Graph() :sommets(std::vector<Sommet>()), arcs(std::vector<Arc>()) {};
 	Graph creerGraph (std::ifstream&);
 	void lireGraph();
-	Graph extractionGraph(Vehicule vehicule);
+	Graph extractionGraph(Sommet,Vehicule);
 private:
 	std::vector<Sommet> sommets;
 	std::vector<Arc> arcs;

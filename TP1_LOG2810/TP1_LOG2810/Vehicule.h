@@ -12,7 +12,7 @@ struct Caracteristiques {
 
 class Vehicule {
 public:
-	Vehicule() :type_(""), autonomieMaximale_(0), autonomieActuelle_(0) {};
+	Vehicule() :type_(""), autonomieMaximale_(0), autonomieActuelle_(0), coefficientPerte_(1){};
 	Vehicule(Caracteristiques caracteristique) :type_(caracteristique.carburant), autonomieMaximale_(caracteristique.autonomieMax), autonomieActuelle_(caracteristique.autonomieActu) {};
 	Vehicule(std::string type, int autonomieMaximale, int autonomieActuelle) : type_(type), autonomieMaximale_(autonomieMaximale), autonomieActuelle_(autonomieActuelle) {};
 	int getAutonomieMaximale() { return autonomieMaximale_; };
@@ -31,7 +31,7 @@ private:
 	std::string type_;
 	int autonomieMaximale_=0;
 	int autonomieActuelle_=0;
-	
+	int coefficientPerte_= 1;
 
 };
 #endif
