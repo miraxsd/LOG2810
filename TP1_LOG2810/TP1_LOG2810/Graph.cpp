@@ -8,6 +8,7 @@
 
 Graph Graph::creerGraph(std::ifstream& fichier)
 {
+	Graph graphDoubleSens;
 	std::string ligne1 = "";
 	std::string ligne2 = "";
 	
@@ -20,8 +21,11 @@ Graph Graph::creerGraph(std::ifstream& fichier)
 		{
 			getline(line1, identifiant, ',');
 			getline(line1, type, ';');
-			if(identifiant!="")
+			if (identifiant != "")
+			{ 
 				sommets.push_back(Sommet(identifiant, type));
+				graphDoubleSens.sommets.push_back(Sommet(identifiant, type));
+			}
 		}
 		while (!line2.eof())
 		{
@@ -41,12 +45,14 @@ Graph Graph::creerGraph(std::ifstream& fichier)
 				
 			}
 				arcs.push_back(Arc(sommetDepart,sommetArrive,std::stoi(distance)));
+				graphDoubleSens.arcs.push_back(Arc(sommetDepart, sommetArrive, std::stoi(distance)));
+				graphDoubleSens.arcs.push_back(Arc(sommetArrive, sommetDepart, std::stoi(distance)));
 			}
 		}
 		fichier.close();
 	
 
-	return *this;
+	return graphDoubleSens;
 }
 void Graph::lireGraph()
 {
@@ -71,44 +77,94 @@ void Graph::lireGraph()
 	
 }
 
-Graph Graph::extractionGraph(Sommet sommetDebut, Vehicule vehicule)
+Graph Graph::extractionGraph(Sommet sommetDepart, Vehicule vehicule)
 {
-	Graph sousGraph;
-	Graph sousGraphPlusLong;
-	int distanceParcourue = 0;
-	int distancePlusLongue = 0;
-	std::vector<Arc> arcsParcourus;
-	bool nouveauArc = true;
-	/*for (Sommet sommet:sommets)
-		while()*/
-	Sommet sommetDepart = sommetDebut;
+	std::map<std::string, int> listeDistances;
+	std::map<std::string, std::string> listeParcours;
+	std::map<std::string, int> listeAutonomiesRestantes;
+	std::map<std::string, Graph> listeSousGraphes;
+	int distanceMaximale = 0;
+	bool fin = false;
 
-	for (Arc arc : arcs)
+	Sommet sommetDistanceMaximale = sommetDepart;
+	for (Sommet sommet : sommets)
+		listeDistances[sommet.getId()] = -1;
+	listeDistances[sommetDepart.getId()] = 0;
+	listeParcours[sommetDepart.getId()] = sommetDepart.getId();
+	listeAutonomiesRestantes[sommetDepart.getId()] = 100;
+
+	std::set<std::string> sommetsVisites;
+
+	while (!fin)
 	{
-		for (Arc arcPrecedent : arcsParcourus)
-			if (arc.getSommetDepart() == arcPrecedent.getSommetDepart() && arc.getSommetArrive() == arcPrecedent.getSommetArrive() && arc.getDistance() == arcPrecedent.getDistance())
-				nouveauArc = false;
-		if(nouveauArc)
-			if ((sommetDepart.getId() == arc.getSommetDepart()->getId()) && (arc.getDistance() <= vehicule.getAutonomieActuelle()))
+		distanceMaximale = 0;
+		for (Sommet sommet : sommets)
+		{
+			if ((sommetsVisites.find(sommet.getId()) == sommetsVisites.end()) && (listeDistances[sommet.getId()] > distanceMaximale))
 			{
-					sousGraph.sommets.push_back(sommetDepart);
-					sousGraph.arcs.push_back(arc);
-					vehicule.autonomieRestante(arc.getDistance());
-					distanceParcourue += arc.getDistance();
-					arcsParcourus.push_back(arc);
-					if ((arc.getSommetArrive()->getType() == vehicule.getType()) || ((vehicule.getType() == "hybrid") && (arc.getSommetArrive()->getType() != "rien")) || (arc.getSommetArrive()->getType() == "hybrid"))
-						vehicule.rechargerAutonomie();
+				distanceMaximale = listeDistances[sommet.getId()];
+				sommetDistanceMaximale = sommet;
+			}
+		}
+		sommetsVisites.insert(sommetDistanceMaximale.getId());
+		if (sommetDistanceMaximale.getId() != sommetDepart.getId())
+			fin = true;
+		for (Sommet sommet : sommets)
+		{
+			if (sommetsVisites.find(sommet.getId()) == sommetsVisites.end())
+				fin = false;
+			else
+				fin = true;
+			if(listeSousGraphes[sommet.getId()].sommets.empty())
+				listeSousGraphes[sommet.getId()].sommets.push_back(sommetDepart);
+			for (Arc arc : arcs)
+			{
+				if ((arc.getSommetDepart()->getId() == sommetDistanceMaximale.getId())
+					&&
+					(arc.getSommetArrive()->getId() == sommet.getId())
+					&&
+					(distanceMaximale + arc.getDistance() > listeDistances[sommet.getId()])
+					&&
+					listeAutonomiesRestantes[sommetDistanceMaximale.getId()] >= vehicule.getCoefficientPerte() * (arc.getDistance()))
+
+				{
+					listeDistances[sommet.getId()] = listeDistances[sommetDistanceMaximale.getId()] + arc.getDistance();
+					listeSousGraphes[sommet.getId()] = listeSousGraphes[sommetDistanceMaximale.getId()];
+					//listeSousGraphes[sommet.getId()].sommets.push_back(sommetDistanceMaximale);
+					listeSousGraphes[sommet.getId()].sommets.push_back(sommet);
+					listeSousGraphes[sommet.getId()].arcs.push_back(arc);
+					if (sommet.getId() != sommetDepart.getId()) 
+						listeParcours[sommet.getId()] = listeParcours[sommetDistanceMaximale.getId()] + " -> " + sommet.getId();
+					else
+					{
+						listeParcours[sommet.getId()] = sommet.getId();
+					}
+						
+					listeAutonomiesRestantes[sommet.getId()] = listeAutonomiesRestantes[sommetDistanceMaximale.getId()] - (arc.getDistance() * vehicule.getCoefficientPerte());
+					/*if (((arc.getSommetArrive()->getType() == vehicule.getType())
+						|| ((vehicule.getType() == "hybrid") && (arc.getSommetArrive()->getType() != "rien"))
+						|| (arc.getSommetArrive()->getType() == "hybrid"))
+						&& (arc.getSommetArrive()->getId() != sommetArrive.getId()))
+						listeAutonomiesRestantes[sommet.getId()] = 100;*/
 					
-
-
 				}
+			}
+		}
 	}
-	if (distancePlusLongue < distanceParcourue)
+	std::string sommetMax;
+	int maxDistance = 0;
+	for (auto itr = listeDistances.begin(); itr != listeDistances.end(); ++itr)
 	{
-		sousGraphPlusLong = sousGraph;
-		distancePlusLongue = distanceParcourue;
-	}	
-	return sousGraph;
+		if (itr->second > maxDistance)
+		{
+			maxDistance = itr->second;
+			sommetMax = itr->first;
+		}
+	}
+	std::cout << listeParcours[sommetMax] << std::endl << listeDistances[sommetMax] << std::endl << listeAutonomiesRestantes[sommetMax];
+
+	return listeSousGraphes[sommetMax];
+
 }
 
 void Graph::plusCourtChemin(Sommet sommetDepart, Sommet sommetArrive, Vehicule& vehicule)

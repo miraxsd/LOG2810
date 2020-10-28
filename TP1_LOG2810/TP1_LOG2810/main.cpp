@@ -118,13 +118,20 @@ void menuPrincipal() {
 int main() {
 
 	//menuPrincipal();
-	Vehicule vehicule("electrique",600,100, 10);
+	Vehicule vehicule("hybrid",600,100, 10);
 	string nomFichier = "graphe.txt";
 	ifstream fichier;
 	fichier.open(nomFichier);
 
 	Graph graph;
-	graph.creerGraph(fichier);
+	Graph graphDoubleSens;
+	graphDoubleSens=graph.creerGraph(fichier);
+	/*graphDoubleSens.lireGraph();
+	graphDoubleSens.plusCourtChemin(Sommet("U", "essence"), Sommet("A", "essence"), vehicule);*/
 	graph.lireGraph();
-	graph.plusCourtChemin(Sommet("C", "rien"), Sommet("X", "electrique"), vehicule);
+	cout << std::endl;
+	/*graph.plusCourtChemin(Sommet("U", "essence"), Sommet("A", "essence"), vehicule);*/
+	graphDoubleSens = graph.extractionGraph(Sommet("C", "rien"), vehicule);
+	std::cout << std::endl;
+	graphDoubleSens.lireGraph();
 }
