@@ -1,5 +1,7 @@
 #include "Graph.h"
 #include <string>
+#include <map>
+#include <set>
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -94,7 +96,7 @@ Graph Graph::extractionGraph(Sommet sommetDebut, Vehicule vehicule)
 					vehicule.autonomieRestante(arc.getDistance());
 					distanceParcourue += arc.getDistance();
 					arcsParcourus.push_back(arc);
-					if ((arc.getSommetArrive()->getType() == vehicule.getType()) || ((vehicule.getType() == "hybrid") && (arc.getSommetArrive()->getType() != "null")) || (arc.getSommetArrive()->getType() == "multi"))
+					if ((arc.getSommetArrive()->getType() == vehicule.getType()) || ((vehicule.getType() == "hybrid") && (arc.getSommetArrive()->getType() != "rien")) || (arc.getSommetArrive()->getType() == "hybrid"))
 						vehicule.rechargerAutonomie();
 					
 
@@ -107,6 +109,76 @@ Graph Graph::extractionGraph(Sommet sommetDebut, Vehicule vehicule)
 		distancePlusLongue = distanceParcourue;
 	}	
 	return sousGraph;
+}
+
+void Graph::plusCourtChemin(Sommet sommetDepart, Sommet sommetArrive, Vehicule& vehicule)
+{
+	std::map<std::string, int> listeDistances;
+	std::map<std::string, std::string> listeParcours;
+	std::map<std::string, int> listeAutonomiesRestantes;
+	int distanceMinimale = INFINI;
+	bool fin = false;
+	Sommet sommetDistanceMinimale = sommetDepart;
+	for (Sommet sommet : sommets)
+		listeDistances[sommet.getId()] = INFINI;
+	listeDistances[sommetDepart.getId()] = 0;
+	listeParcours[sommetDepart.getId()] = sommetDepart.getId();
+	listeAutonomiesRestantes[sommetDepart.getId()] = 100;
+	std::set<std::string> sommetsVisites;
+	while ((sommetsVisites.find(sommetArrive.getId()) == sommetsVisites.end()) && !fin)
+	{
+		distanceMinimale = INFINI;
+		for (Sommet sommet : sommets)
+		{
+			if ((sommetsVisites.find(sommet.getId()) == sommetsVisites.end()) && (listeDistances[sommet.getId()] < distanceMinimale))
+			{
+				distanceMinimale = listeDistances[sommet.getId()];
+				sommetDistanceMinimale = sommet;
+			}
+		}
+		sommetsVisites.insert(sommetDistanceMinimale.getId());
+		if(sommetDistanceMinimale.getId()!=sommetDepart.getId())
+			fin = true;
+		for (Sommet sommet : sommets)
+		{
+			if (sommetsVisites.find(sommet.getId()) == sommetsVisites.end())
+				fin = false;
+			else
+				fin = true;
+				for (Arc arc : arcs)
+				{
+					if ((arc.getSommetDepart()->getId() == sommetDistanceMinimale.getId()) 
+						&&
+						(arc.getSommetArrive()->getId() == sommet.getId()) 
+						&&
+						(distanceMinimale + arc.getDistance() < listeDistances[sommet.getId()])
+						&&
+						listeAutonomiesRestantes[sommetDistanceMinimale.getId()]>= vehicule.getCoefficientPerte()*(arc.getDistance()))
+
+					{
+						listeDistances[sommet.getId()] = listeDistances[sommetDistanceMinimale.getId()] + arc.getDistance();
+						if(sommet.getId()!=sommetDepart.getId())
+							listeParcours[sommet.getId()] = listeParcours[sommetDistanceMinimale.getId()] + " -> " + sommet.getId();
+						else
+							listeParcours[sommet.getId()] = sommet.getId();
+						listeAutonomiesRestantes[sommet.getId()]= listeAutonomiesRestantes[sommetDistanceMinimale.getId()]-(arc.getDistance()*vehicule.getCoefficientPerte());
+						if (((arc.getSommetArrive()->getType() == vehicule.getType()) 
+							|| ((vehicule.getType() == "hybrid") && (arc.getSommetArrive()->getType() != "rien")) 
+							|| (arc.getSommetArrive()->getType() == "hybrid"))
+							&& (arc.getSommetArrive()->getId()!=sommetArrive.getId()))
+							listeAutonomiesRestantes[sommet.getId()] = 100;						
+					}
+				}
+		}
+	}
+	if (listeParcours[sommetArrive.getId()] != "")
+	{
+		std::cout << "l'autonomie finale restante du vehicule est de " << listeAutonomiesRestantes[sommetArrive.getId()] << "%" << std::endl;
+		std::cout << "Le plus court chemin utilise est: " << listeParcours[sommetArrive.getId()] << std::endl 
+			<< "La longueur du chemin le plus court est " << listeDistances[sommetArrive.getId()] << " Km";
+	}
+	else
+		std::cout << "Il n'y a pas de chemin de " + sommetDepart.getId() + " vers " + sommetArrive.getId();
 }
 
 

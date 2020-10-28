@@ -9,12 +9,14 @@
 #include "Arc.h"
 #include "Vehicule.h"
 
+const int INFINI = 9999;
 class Graph {
 public:
 	Graph() :sommets(std::vector<Sommet>()), arcs(std::vector<Arc>()) {};
 	Graph creerGraph (std::ifstream&);
 	void lireGraph();
 	Graph extractionGraph(Sommet,Vehicule);
+	void plusCourtChemin (Sommet,Sommet, Vehicule&);
 private:
 	std::vector<Sommet> sommets;
 	std::vector<Arc> arcs;

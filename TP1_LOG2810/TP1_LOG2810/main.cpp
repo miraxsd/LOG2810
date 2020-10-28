@@ -118,13 +118,13 @@ void menuPrincipal() {
 int main() {
 
 	//menuPrincipal();
+	Vehicule vehicule("electrique",600,100, 10);
 	string nomFichier = "graphe.txt";
 	ifstream fichier;
 	fichier.open(nomFichier);
 
 	Graph graph;
 	graph.creerGraph(fichier);
-
 	graph.lireGraph();
-
+	graph.plusCourtChemin(Sommet("C", "rien"), Sommet("X", "electrique"), vehicule);
 }
