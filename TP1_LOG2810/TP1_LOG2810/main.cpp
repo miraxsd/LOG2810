@@ -26,7 +26,7 @@ Vehicule demanderCaracteristiques() {
 	cin >> caracteristique.autonomieMax;
 
 	std::cout << "Autonomie actuelle : ";
-	cin >> caracteristique.autonomieActu;
+	//cin >> caracteristique.autonomieActu;
 	Vehicule vehicule(caracteristique);
 	return vehicule;
 }
@@ -118,7 +118,7 @@ void menuPrincipal() {
 int main() {
 
 	//menuPrincipal();
-	Vehicule vehicule("hybrid",600,100, 10);
+	Vehicule vehicule("hybrid",600, 10);
 	string nomFichier = "graphe.txt";
 	ifstream fichier;
 	fichier.open(nomFichier);
