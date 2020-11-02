@@ -7,7 +7,6 @@
 
 using namespace std;
 
-
 Vehicule demanderCaracteristiques() {
 
 	Caracteristiques caracteristique;
@@ -27,6 +26,12 @@ Vehicule demanderCaracteristiques() {
 
 	std::cout << "Autonomie actuelle : ";
 	cin >> caracteristique.autonomieActu;
+
+	std::cout << "Coefficient de perte : ";
+	cin >> caracteristique.coefficientPerte;
+
+	std::cout << std::endl;
+
 	Vehicule vehicule(caracteristique);
 	return vehicule;
 }
@@ -45,26 +50,28 @@ void menuPrincipal() {
 	string nomFichier;
 	ifstream fichier;
 	ifstream nouveauFichier;
+	Graph graph;
+	Graph graphDoubleSens;
+	Vehicule vehicule;
 	bool invalide = false;
-	bool choixAchoisi = true;
+	bool choixAchoisi = false;
+	bool carteExiste = false;
 
 	while (exit==false) {
 		std::cout << "(a) Demander les caracteristiques du vehicule \n"
 			"(b) Mettre a jour la carte \n"
-			"(c) Adapter la carte aux caracteristiques\n"
+			"(c) Extraire un sous-graphe \n"
 			"(d) Determiner le plus court chemin \n"
 			"(e) Quitter \n";
 
 		std::cout << '\n';
 		cin >> choix;
 		invalide = false;
-		Graph graph;
-		Vehicule vehicule;
 		switch (choix) {
 		case 'a':
 		case'A':
 			choixAchoisi = true;
-			vehicule= demanderCaracteristiques();
+			vehicule = demanderCaracteristiques();
 			//fct qui lit une carac...
 			//lireCaracteristique(caracFournie);
 			break;
@@ -76,31 +83,84 @@ void menuPrincipal() {
 				cout << "Veuillez entrer le nom du fichier contenant la nouvelle carte: " << endl << endl;
 				invalide = true;
 				cin >> nomNouveauFichier;
+				std::cout << endl;
 				nouveauFichier.open(nomNouveauFichier);
 			} while (!nouveauFichier.is_open());
-			graph.creerGraph(nouveauFichier);
+			graphDoubleSens=graph.creerGraph(nouveauFichier);
+			graph.lireGraph();
+			carteExiste = true;
+			std::cout << std::endl << graph.getTailleSommets();
+			std::cout << endl;
 			break;
 
 		case 'c':
-		case'C': {
+		case'C': 
 			if (choixAchoisi == false) {
-
-				int pointDepart = 0, pointArrivee = 0;
-				//-----------------//
-
-			}
-			else {
-				std::cout << "Vous devez choisir les caracteristiques du vehicule avant d'adapter la carte \n \n";
+				std::cout << "Vous devez choisir les caracteristiques du vehicule avant d'extraire le sous-graphe \n \n";
 				break;
 			}
-			
-		}
+			if (carteExiste == false) {
+				std::cout << "Vous devez generer la carte \n \n";
+				break;
+			}
+			else {
 
+				int indiceSommet = 0;
+				std::cout << "Veuillez indiquer l'indice du sommet afin d'extraire le sous-graphe qui contient le chemin le plus long \n \n";
+				cin >> indiceSommet;
+
+				if (indiceSommet > graph.getTailleSommets() - 1 || indiceSommet < 0) {
+					std::cout << "Il faut un indice valide \n \n";
+				}
+				else {
+					graph.extractionGraph(graph.trouverSommet(indiceSommet), vehicule);
+					break;
+				}
+			}
+		
+			break;
 		case'd':
-		case 'D':{
+		case 'D':
 			//appeller determiner le chemin le plus court
-		}
+			if (choixAchoisi == false) {
+				std::cout << "Vous devez choisir les caracteristiques du vehicule avant de trouver le plus court chemin \n \n";
+				break;
+			}
+			if (carteExiste == false) {
+				std::cout << "Vous devez generer la carte \n \n";
+				break;
+			}
+			else {
+				std::cout << "Voici le graphe oriente dans les deux sens : \n \n";
+				graphDoubleSens.lireGraph();
 
+				std::cout << endl << endl;
+
+				int indiceDepart = 0;
+				std::cout << "Veuillez entrer l'indice du sommet de depart \n";
+				cin >> indiceDepart;
+
+				while (indiceDepart > graph.getTailleSommets() - 1 || indiceDepart < 0) {
+					std::cout << "Il faut un indice valide \n \n";
+					cin >> indiceDepart;
+				}
+
+				int indiceArrive = 0;
+				std::cout << "Veuillez entrer l'indice du sommet d'arrive \n";
+				cin >> indiceArrive;
+
+				while (indiceArrive > graph.getTailleSommets() - 1 || indiceArrive < 0) {
+					std::cout << "Il faut un indice valide \n \n";
+					cin >> indiceArrive;
+				}
+
+				std::cout << endl << endl;
+
+				std::cout << "Le chemin le plus court qui evite de tomber en panne est : \n \n";
+				graphDoubleSens.plusCourtChemin(graphDoubleSens.trouverSommet(indiceDepart), graphDoubleSens.trouverSommet(indiceArrive), vehicule);
+			}
+
+		break;
 		case'e':
 		case'E': {
 			exit = true;
@@ -117,21 +177,22 @@ void menuPrincipal() {
 
 int main() {
 
-	//menuPrincipal();
-	Vehicule vehicule("hybrid",600,100, 10);
+	menuPrincipal();
+
+	/*Vehicule vehicule("hybrid",600,100, 10);
 	string nomFichier = "graphe.txt";
 	ifstream fichier;
-	fichier.open(nomFichier);
+	fichier.open(nomFichier);*/
 
-	Graph graph;
+	/*Graph graph;
 	Graph graphDoubleSens;
 	graphDoubleSens=graph.creerGraph(fichier);
-	/*graphDoubleSens.lireGraph();
-	graphDoubleSens.plusCourtChemin(Sommet("U", "essence"), Sommet("A", "essence"), vehicule);*/
+	graphDoubleSens.lireGraph();
+	graphDoubleSens.plusCourtChemin(Sommet("U", "essence"), Sommet("A", "essence"), vehicule);
 	graph.lireGraph();
 	cout << std::endl;
-	/*graph.plusCourtChemin(Sommet("U", "essence"), Sommet("A", "essence"), vehicule);*/
+	graph.plusCourtChemin(Sommet("U", "essence"), Sommet("A", "essence"), vehicule);
 	graphDoubleSens = graph.extractionGraph(Sommet("C", "rien"), vehicule);
 	std::cout << std::endl;
-	graphDoubleSens.lireGraph();
+	graphDoubleSens.lireGraph();*/
 }

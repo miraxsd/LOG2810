@@ -6,6 +6,10 @@
 #include <fstream>
 #include <sstream>
 
+Sommet Graph::trouverSommet(int indice) {
+	return sommets[indice];
+}
+
 Graph Graph::creerGraph(std::ifstream& fichier)
 {
 	Graph graphDoubleSens;
@@ -51,16 +55,16 @@ Graph Graph::creerGraph(std::ifstream& fichier)
 		}
 		fichier.close();
 	
-
 	return graphDoubleSens;
 }
+
 void Graph::lireGraph()
 {
-	
+	int indice = 0;
 	for (Sommet sommet:sommets)
 	{
 		bool premierArc = true;
-		std::cout <<"(" << sommet.getId() << ", " << sommet.getType() << "(";
+		std::cout << indice << ". " <<"(" << sommet.getId() << ", " << sommet.getType() << "(";
 		for(Arc arc:arcs)
 			{
 				if (sommet.getId() == arc.getSommetDepart()->getId())
@@ -73,7 +77,10 @@ void Graph::lireGraph()
 			}
 
 		std::cout << "))" << std::endl;
+		indice++;
 	}
+
+	std::cout << std::endl << sommets.size();
 	
 }
 
@@ -161,7 +168,10 @@ Graph Graph::extractionGraph(Sommet sommetDepart, Vehicule vehicule)
 			sommetMax = itr->first;
 		}
 	}
-	std::cout << listeParcours[sommetMax] << std::endl << listeDistances[sommetMax] << std::endl << listeAutonomiesRestantes[sommetMax];
+	std::cout << std::endl;
+	std::cout <<  "Le parcours est : " << listeParcours[sommetMax] << std::endl 
+		<< "Le cout du chemin est : " << listeDistances[sommetMax] << std::endl 
+		<< "L'autonomie restante du vehicule est : " << listeAutonomiesRestantes[sommetMax] << std::endl << std::endl;
 
 	return listeSousGraphes[sommetMax];
 
@@ -230,8 +240,8 @@ void Graph::plusCourtChemin(Sommet sommetDepart, Sommet sommetArrive, Vehicule& 
 	if (listeParcours[sommetArrive.getId()] != "")
 	{
 		std::cout << "l'autonomie finale restante du vehicule est de " << listeAutonomiesRestantes[sommetArrive.getId()] << "%" << std::endl;
-		std::cout << "Le plus court chemin utilise est: " << listeParcours[sommetArrive.getId()] << std::endl 
-			<< "La longueur du chemin le plus court est " << listeDistances[sommetArrive.getId()] << " Km";
+		std::cout << "Le plus court chemin utilise est: " << listeParcours[sommetArrive.getId()] << std::endl
+			<< "La longueur du chemin le plus court est " << listeDistances[sommetArrive.getId()] << " Km" << std::endl << std::endl;
 	}
 	else
 		std::cout << "Il n'y a pas de chemin de " + sommetDepart.getId() + " vers " + sommetArrive.getId();
