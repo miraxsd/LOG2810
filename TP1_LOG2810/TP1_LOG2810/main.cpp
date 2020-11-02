@@ -24,14 +24,12 @@ Vehicule demanderCaracteristiques() {
 	std::cout << "Autonomie maximale : ";
 	cin >> caracteristique.autonomieMax;
 
-	std::cout << "Autonomie actuelle : ";
-	cin >> caracteristique.autonomieActu;
-
 	std::cout << "Coefficient de perte : ";
 	cin >> caracteristique.coefficientPerte;
 
 	std::cout << std::endl;
 
+	//cin >> caracteristique.autonomieActu;
 	Vehicule vehicule(caracteristique);
 	return vehicule;
 }
@@ -180,6 +178,10 @@ int main() {
 	menuPrincipal();
 
 	/*Vehicule vehicule("hybrid",600,100, 10);
+=======
+	//menuPrincipal();
+	Vehicule vehicule("hybrid",600, 10);
+>>>>>>> 18b33e0f893befa71406108111681c2ab19be201
 	string nomFichier = "graphe.txt";
 	ifstream fichier;
 	fichier.open(nomFichier);*/
