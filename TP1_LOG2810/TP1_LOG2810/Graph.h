@@ -14,9 +14,9 @@ class Graph {
 public:
 	Graph() :sommets(std::vector<Sommet>()), arcs(std::vector<Arc>()) {};
 	Graph creerGraph (std::ifstream&);
-	Sommet trouverSommet(int indice);
+	Sommet trouverSommet(std::string indice);
 	void lireGraph();
-	int getTailleSommets() { return sommets.size(); };
+	//int getTailleSommets() { return sommets.size(); };
 	Graph extractionGraph(Sommet,Vehicule);
 	void plusCourtChemin (Sommet,Sommet, Vehicule&);
 private:

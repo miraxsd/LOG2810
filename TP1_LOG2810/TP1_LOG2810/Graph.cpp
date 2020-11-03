@@ -6,8 +6,11 @@
 #include <fstream>
 #include <sstream>
 
-Sommet Graph::trouverSommet(int indice) {
-	return sommets[indice];
+Sommet Graph::trouverSommet(std::string indice) {
+	for (Sommet sommet : sommets)
+		if (indice == sommet.getId())
+			return sommet;
+	return Sommet("inexistant",0);
 }
 
 Graph Graph::creerGraph(std::ifstream& fichier)
@@ -170,8 +173,8 @@ Graph Graph::extractionGraph(Sommet sommetDepart, Vehicule vehicule)
 	}
 	std::cout << std::endl;
 	std::cout <<  "Le parcours est : " << listeParcours[sommetMax] << std::endl 
-		<< "Le cout du chemin est : " << listeDistances[sommetMax] << std::endl 
-		<< "L'autonomie restante du vehicule est : " << listeAutonomiesRestantes[sommetMax] << std::endl << std::endl;
+		<< "Le cout du chemin est : " << listeDistances[sommetMax] << std::endl << std::endl;
+		/*<< "L'autonomie restante du vehicule est : " << listeAutonomiesRestantes[sommetMax]<< std::endl */ 
 
 	return listeSousGraphes[sommetMax];
 
@@ -189,7 +192,7 @@ void Graph::plusCourtChemin(Sommet sommetDepart, Sommet sommetArrive, Vehicule& 
 		listeDistances[sommet.getId()] = INFINI;
 	listeDistances[sommetDepart.getId()] = 0;
 	listeParcours[sommetDepart.getId()] = sommetDepart.getId();
-	listeAutonomiesRestantes[sommetDepart.getId()] = 100;
+	listeAutonomiesRestantes[sommetDepart.getId()] = vehicule.getAutonomieDepart();
 	std::set<std::string> sommetsVisites;
 	while ((sommetsVisites.find(sommetArrive.getId()) == sommetsVisites.end()) && !fin)
 	{
@@ -242,6 +245,7 @@ void Graph::plusCourtChemin(Sommet sommetDepart, Sommet sommetArrive, Vehicule& 
 		std::cout << "l'autonomie finale restante du vehicule est de " << listeAutonomiesRestantes[sommetArrive.getId()] << "%" << std::endl;
 		std::cout << "Le plus court chemin utilise est: " << listeParcours[sommetArrive.getId()] << std::endl
 			<< "La longueur du chemin le plus court est " << listeDistances[sommetArrive.getId()] << " Km" << std::endl << std::endl;
+		vehicule.setAutonomieDepart(listeAutonomiesRestantes[sommetArrive.getId()]);
 	}
 	else
 		std::cout << "Il n'y a pas de chemin de " + sommetDepart.getId() + " vers " + sommetArrive.getId();

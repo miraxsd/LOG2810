@@ -12,19 +12,19 @@ Vehicule demanderCaracteristiques() {
 	Caracteristiques caracteristique;
 	bool carburantPossible = true;
 	do {
-		std::cout << "Type de carburant : ";
+		std::cout << "Type de carburant (essence, elec ou hybrid) : ";
 		cin >> caracteristique.carburant;
 		carburantPossible = true;
-		if (caracteristique.carburant != "essence" && caracteristique.carburant != "hybride" && caracteristique.carburant != "electricite") {
+		if (caracteristique.carburant != "essence" && caracteristique.carburant != "hybrid" && caracteristique.carburant != "elec") {
 			std::cout << "Votre carburant n'est pas pris en charge par le systeme \n";
 			carburantPossible = false;
 		}
 	} while (carburantPossible == false);
 
-	std::cout << "Autonomie maximale : ";
+	std::cout << "Autonomie maximale (entier naturel positif) : ";
 	cin >> caracteristique.autonomieMax;
 
-	std::cout << "Coefficient de perte : ";
+	std::cout << "Coefficient de perte (entier naturel positif de 0 a 100) : ";
 	cin >> caracteristique.coefficientPerte;
 
 	std::cout << std::endl;
@@ -87,8 +87,7 @@ void menuPrincipal() {
 			graphDoubleSens=graph.creerGraph(nouveauFichier);
 			graph.lireGraph();
 			carteExiste = true;
-			std::cout << std::endl << graph.getTailleSommets();
-			std::cout << endl;
+			std::cout << std::endl << endl;
 			break;
 
 		case 'c':
@@ -103,19 +102,24 @@ void menuPrincipal() {
 			}
 			else {
 
-				int indiceSommet = 0;
+				std::string indiceSommet = "";
 				std::cout << "Veuillez indiquer l'indice du sommet afin d'extraire le sous-graphe qui contient le chemin le plus long \n \n";
 				cin >> indiceSommet;
+				while(graph.trouverSommet(indiceSommet).getId()=="inexistant")
+				{
+					
+					cin >> indiceSommet;
 
-				if (indiceSommet > graph.getTailleSommets() - 1 || indiceSommet < 0) {
+					//if (indiceSommet > graph.getTailleSommets() - 1 || indiceSommet < 0) {
 					std::cout << "Il faut un indice valide \n \n";
+
 				}
-				else {
-					graph.extractionGraph(graph.trouverSommet(indiceSommet), vehicule);
-					break;
-				}
-			}
-		
+				
+						graph.extractionGraph(graph.trouverSommet(indiceSommet), vehicule);
+						break;
+					
+			
+		}
 			break;
 		case'd':
 		case 'D':
@@ -134,28 +138,35 @@ void menuPrincipal() {
 
 				std::cout << endl << endl;
 
-				int indiceDepart = 0;
+				std::string indiceDepart = "";
 				std::cout << "Veuillez entrer l'indice du sommet de depart \n";
 				cin >> indiceDepart;
-
-				while (indiceDepart > graph.getTailleSommets() - 1 || indiceDepart < 0) {
-					std::cout << "Il faut un indice valide \n \n";
+				while (graph.trouverSommet(indiceDepart).getId() == "inexistant")
+				{
 					cin >> indiceDepart;
-				}
 
-				int indiceArrive = 0;
-				std::cout << "Veuillez entrer l'indice du sommet d'arrive \n";
-				cin >> indiceArrive;
+					//while (indiceDepart > graph.getTailleSommets() - 1 || indiceDepart < 0) {
+						std::cout << "Il faut un indice valide \n \n";
+						cin >> indiceDepart;
+					}
 
-				while (indiceArrive > graph.getTailleSommets() - 1 || indiceArrive < 0) {
-					std::cout << "Il faut un indice valide \n \n";
+					std::string indiceArrive = "";
+					std::cout << "Veuillez entrer l'indice du sommet d'arrive \n";
 					cin >> indiceArrive;
+					while (graph.trouverSommet(indiceArrive).getId() == "inexistant")
+					{
+						cin >> indiceArrive;
+
+					//while (indiceArrive > graph.getTailleSommets() - 1 || indiceArrive < 0) {
+						std::cout << "Il faut un indice valide \n \n";
+						cin >> indiceArrive;
 				}
 
 				std::cout << endl << endl;
 
 				std::cout << "Le chemin le plus court qui evite de tomber en panne est : \n \n";
 				graphDoubleSens.plusCourtChemin(graphDoubleSens.trouverSommet(indiceDepart), graphDoubleSens.trouverSommet(indiceArrive), vehicule);
+				break;
 			}
 
 		break;
