@@ -1,3 +1,8 @@
+////////////////////////////////////////////////////////////////////////////////////////////
+// Graph.cpp
+// Ce fichier contient l'implémentation des méthodes du graph.h
+//Auteurs : Karim Gargouri, Omar Sadat, Samia Safaa
+/////////////////////////////////////////////////////////////////////////////////////////////////
 #include "Graph.h"
 #include <string>
 #include <map>
@@ -5,7 +10,8 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-
+// la fonction trouverSommet trouve le sommet associé à l'indice mis en paramètre'
+// return : retourne le sommet si il est trouvé ou null dans le cas écheant
 Sommet Graph::trouverSommet(std::string indice) {
 	for (Sommet sommet : sommets)
 		if (indice == sommet.getId())
@@ -206,7 +212,7 @@ void Graph::plusCourtChemin(Sommet sommetDepart, Sommet sommetArrive, Vehicule& 
 			fin = true;
 		for (Sommet sommet : sommets)
 		{
-			if (sommetsVisites.find(sommet.getId()) == sommetsVisites.end())
+			if ((sommetsVisites.find(sommet.getId()) == sommetsVisites.end()) && (sommetsVisites.size()!=1))
 				fin = false;
 			else
 				fin = true;
@@ -239,12 +245,12 @@ void Graph::plusCourtChemin(Sommet sommetDepart, Sommet sommetArrive, Vehicule& 
 	if (listeParcours[sommetArrive.getId()] != "")
 	{
 		std::cout << "l'autonomie finale restante du vehicule est de " << listeAutonomiesRestantes[sommetArrive.getId()] << "%" << std::endl;
-		std::cout << "Le plus court chemin utilise est: " << listeParcours[sommetArrive.getId()] << std::endl
+		std::cout << "Le plus court chemin utilise qui evite de tomber en panne est: " << listeParcours[sommetArrive.getId()] << std::endl
 			<< "La longueur du chemin le plus court est " << listeDistances[sommetArrive.getId()] << " Km" << std::endl << std::endl;
 		vehicule.setAutonomieDepart(listeAutonomiesRestantes[sommetArrive.getId()]);
 	}
 	else
-		std::cout << "Il n'y a pas de chemin de " + sommetDepart.getId() + " vers " + sommetArrive.getId() << std::endl << std::endl;
+		std::cout << "L'autonomie du vehicule ne lui permet pas d'aller de la station " + sommetDepart.getId() + " vers la station " + sommetArrive.getId() << std::endl << std::endl;
 }
 
 

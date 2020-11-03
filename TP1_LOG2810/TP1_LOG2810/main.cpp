@@ -152,7 +152,6 @@ void menuPrincipal() {
 
 				std::cout << endl << endl;
 
-				std::cout << "Le chemin le plus court qui evite de tomber en panne est : \n \n";
 				graphDoubleSens.plusCourtChemin(graphDoubleSens.trouverSommet(indiceDepart), graphDoubleSens.trouverSommet(indiceArrive), vehicule);
 				break;
 			}
