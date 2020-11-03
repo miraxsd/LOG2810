@@ -10,7 +10,7 @@ Sommet Graph::trouverSommet(std::string indice) {
 	for (Sommet sommet : sommets)
 		if (indice == sommet.getId())
 			return sommet;
-	return Sommet("inexistant",0);
+	return Sommet("inexistant","aucun");
 }
 
 Graph Graph::creerGraph(std::ifstream& fichier)
@@ -63,11 +63,10 @@ Graph Graph::creerGraph(std::ifstream& fichier)
 
 void Graph::lireGraph()
 {
-	int indice = 0;
 	for (Sommet sommet:sommets)
 	{
 		bool premierArc = true;
-		std::cout << indice << ". " <<"(" << sommet.getId() << ", " << sommet.getType() << "(";
+		std::cout <<"(" << sommet.getId() << ", " << sommet.getType() << "(";
 		for(Arc arc:arcs)
 			{
 				if (sommet.getId() == arc.getSommetDepart()->getId())
@@ -80,10 +79,7 @@ void Graph::lireGraph()
 			}
 
 		std::cout << "))" << std::endl;
-		indice++;
 	}
-
-	std::cout << std::endl << sommets.size();
 	
 }
 
@@ -248,7 +244,7 @@ void Graph::plusCourtChemin(Sommet sommetDepart, Sommet sommetArrive, Vehicule& 
 		vehicule.setAutonomieDepart(listeAutonomiesRestantes[sommetArrive.getId()]);
 	}
 	else
-		std::cout << "Il n'y a pas de chemin de " + sommetDepart.getId() + " vers " + sommetArrive.getId();
+		std::cout << "Il n'y a pas de chemin de " + sommetDepart.getId() + " vers " + sommetArrive.getId() << std::endl << std::endl;
 }
 
 

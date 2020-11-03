@@ -105,19 +105,13 @@ void menuPrincipal() {
 				std::string indiceSommet = "";
 				std::cout << "Veuillez indiquer l'indice du sommet afin d'extraire le sous-graphe qui contient le chemin le plus long \n \n";
 				cin >> indiceSommet;
-				while(graph.trouverSommet(indiceSommet).getId()=="inexistant")
+				while (graph.trouverSommet(indiceSommet).getId() == "inexistant")
 				{
-					
-					cin >> indiceSommet;
-
-					//if (indiceSommet > graph.getTailleSommets() - 1 || indiceSommet < 0) {
 					std::cout << "Il faut un indice valide \n \n";
-
+					cin >> indiceSommet;
 				}
-				
-						graph.extractionGraph(graph.trouverSommet(indiceSommet), vehicule);
-						break;
-					
+					graph.extractionGraph(graph.trouverSommet(indiceSommet), vehicule);
+					break;
 			
 		}
 			break;
@@ -139,25 +133,19 @@ void menuPrincipal() {
 				std::cout << endl << endl;
 
 				std::string indiceDepart = "";
-				std::cout << "Veuillez entrer l'indice du sommet de depart \n";
+				std::cout << "Veuillez entrer l'indice (lettre) du sommet de depart \n";
 				cin >> indiceDepart;
 				while (graph.trouverSommet(indiceDepart).getId() == "inexistant")
 				{
-					cin >> indiceDepart;
-
-					//while (indiceDepart > graph.getTailleSommets() - 1 || indiceDepart < 0) {
 						std::cout << "Il faut un indice valide \n \n";
 						cin >> indiceDepart;
 					}
 
 					std::string indiceArrive = "";
-					std::cout << "Veuillez entrer l'indice du sommet d'arrive \n";
+					std::cout << "Veuillez entrer l'indice (lettre) du sommet d'arrive \n";
 					cin >> indiceArrive;
 					while (graph.trouverSommet(indiceArrive).getId() == "inexistant")
 					{
-						cin >> indiceArrive;
-
-					//while (indiceArrive > graph.getTailleSommets() - 1 || indiceArrive < 0) {
 						std::cout << "Il faut un indice valide \n \n";
 						cin >> indiceArrive;
 				}
