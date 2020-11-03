@@ -10,6 +10,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+
 // la fonction trouverSommet trouve le sommet associé à l'indice mis en paramètre'
 // return : retourne le sommet si il est trouvé ou null dans le cas écheant
 Sommet Graph::trouverSommet(std::string indice) {

@@ -1,3 +1,9 @@
+/////////////////////////////////////////////////////////////////////////////////////////////////
+// main.cpp
+// Ce fichier contient le code qui sera exécuté lorsque l'utilisateur utilisera le programme
+//Auteurs : Karim Gargouri, Omar Sadat, Samia Safaa
+////////////////////////////////////////////////////////////////////////////////////////////////
+
 #include "Graph.h"
 #include <iostream>
 #include <fstream>
@@ -7,11 +13,15 @@
 
 using namespace std;
 
+
+// Fonction qui permet de demander les caractéristiques du véhicule 
+// de l'utilisateur et qui retourne celui-ci. 
 Vehicule demanderCaracteristiques() {
 
 	Caracteristiques caracteristique;
 	bool carburantPossible = true;
 	do {
+		//On demande le type de carburant
 		std::cout << "Type de carburant (essence, elec ou hybrid) : ";
 		cin >> caracteristique.carburant;
 		carburantPossible = true;
@@ -21,23 +31,18 @@ Vehicule demanderCaracteristiques() {
 		}
 	} while (carburantPossible == false);
 
+	// On demande l'autonomie max
 	std::cout << "Autonomie maximale (entier naturel positif) : ";
 	cin >> caracteristique.autonomieMax;
 
+	// On demande le coefficient de perte
 	std::cout << "Coefficient de perte (entier naturel positif de 0 a 100) : ";
 	cin >> caracteristique.coefficientPerte;
 
 	std::cout << std::endl;
 
-	//cin >> caracteristique.autonomieActu;
 	Vehicule vehicule(caracteristique);
 	return vehicule;
-}
-
-void lireCaracteristique (Caracteristiques caracteristique){
-	
-	//Voir cmt utiliser les caracteristiques qu'on donne
-
 }
 
 void menuPrincipal() {
@@ -52,7 +57,11 @@ void menuPrincipal() {
 	Graph graphDoubleSens;
 	Vehicule vehicule;
 	bool invalide = false;
+
+	// bool qui permet de verifier si A a été choisi avant
 	bool choixAchoisi = false;
+
+	// bool qui permet de verifier si la carte a été générée
 	bool carteExiste = false;
 
 	while (exit==false) {
@@ -70,8 +79,6 @@ void menuPrincipal() {
 		case'A':
 			choixAchoisi = true;
 			vehicule = demanderCaracteristiques();
-			//fct qui lit une carac...
-			//lireCaracteristique(caracFournie);
 			break;
 		case 'b':
 		case'B':
@@ -110,14 +117,14 @@ void menuPrincipal() {
 					std::cout << "Il faut un indice valide \n \n";
 					cin >> indiceSommet;
 				}
-					graph.extractionGraph(graph.trouverSommet(indiceSommet), vehicule);
+					Graph sousGraphe = graph.extractionGraph(graph.trouverSommet(indiceSommet), vehicule);
 					break;
 			
 		}
 			break;
 		case'd':
 		case 'D':
-			//appeller determiner le chemin le plus court
+			
 			if (choixAchoisi == false) {
 				std::cout << "Vous devez choisir les caracteristiques du vehicule avant de trouver le plus court chemin \n \n";
 				break;
@@ -128,6 +135,8 @@ void menuPrincipal() {
 			}
 			else {
 				std::cout << "Voici le graphe oriente dans les deux sens : \n \n";
+
+				//Cela permet d'afficher le graph orienté dans les deux sens
 				graphDoubleSens.lireGraph();
 
 				std::cout << endl << endl;
@@ -152,6 +161,7 @@ void menuPrincipal() {
 
 				std::cout << endl << endl;
 
+				//On appelle la méthode du plus court chemin sur le graph orienté dans les deux sens
 				graphDoubleSens.plusCourtChemin(graphDoubleSens.trouverSommet(indiceDepart), graphDoubleSens.trouverSommet(indiceArrive), vehicule);
 				break;
 			}
@@ -173,26 +183,8 @@ void menuPrincipal() {
 
 int main() {
 
+
+	//On appelle la fonction principale qui est celle du menu principal
 	menuPrincipal();
 
-	/*Vehicule vehicule("hybrid",600,100, 10);
-=======
-	//menuPrincipal();
-	Vehicule vehicule("hybrid",600, 10);
->>>>>>> 18b33e0f893befa71406108111681c2ab19be201
-	string nomFichier = "graphe.txt";
-	ifstream fichier;
-	fichier.open(nomFichier);*/
-
-	/*Graph graph;
-	Graph graphDoubleSens;
-	graphDoubleSens=graph.creerGraph(fichier);
-	graphDoubleSens.lireGraph();
-	graphDoubleSens.plusCourtChemin(Sommet("U", "essence"), Sommet("A", "essence"), vehicule);
-	graph.lireGraph();
-	cout << std::endl;
-	graph.plusCourtChemin(Sommet("U", "essence"), Sommet("A", "essence"), vehicule);
-	graphDoubleSens = graph.extractionGraph(Sommet("C", "rien"), vehicule);
-	std::cout << std::endl;
-	graphDoubleSens.lireGraph();*/
 }
