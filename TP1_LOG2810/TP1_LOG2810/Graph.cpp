@@ -10,6 +10,8 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+
+
 // la fonction trouverSommet trouve le sommet associé à l'indice mis en paramètre'
 // return : retourne le sommet si il est trouvé ou null dans le cas écheant
 Sommet Graph::trouverSommet(std::string indice) {
@@ -19,6 +21,9 @@ Sommet Graph::trouverSommet(std::string indice) {
 	return Sommet("inexistant","aucun");
 }
 
+
+//Cette méthode prend en paramètre le fichier à partir duquel elle extrait les sommets et les arcs du graphe. Elle retourne dans l’objet courant un graphe
+//unidirectionnel et renvoie un graphe bidirectionnel comme valeur de retour.
 Graph Graph::creerGraph(std::ifstream& fichier)
 {
 	Graph graphDoubleSens;
@@ -67,6 +72,8 @@ Graph Graph::creerGraph(std::ifstream& fichier)
 	return graphDoubleSens;
 }
 
+
+//Cette méthode permet d’afficher l’objet Graph courant sous la forme exigée dans l’énoncé du TP
 void Graph::lireGraph()
 {
 	for (Sommet sommet:sommets)
@@ -89,6 +96,8 @@ void Graph::lireGraph()
 	
 }
 
+
+// Méthode qui permet d'extraire et afficher le plus long chemin que le vehicule peut parcourir selon son autonomie sans la recharger.
 Graph Graph::extractionGraph(Sommet sommetDepart, Vehicule vehicule)
 {
 	std::map<std::string, int> listeDistances;
@@ -142,7 +151,6 @@ Graph Graph::extractionGraph(Sommet sommetDepart, Vehicule vehicule)
 				{
 					listeDistances[sommet.getId()] = listeDistances[sommetDistanceMaximale.getId()] + arc.getDistance();
 					listeSousGraphes[sommet.getId()] = listeSousGraphes[sommetDistanceMaximale.getId()];
-					//listeSousGraphes[sommet.getId()].sommets.push_back(sommetDistanceMaximale);
 					listeSousGraphes[sommet.getId()].sommets.push_back(sommet);
 					listeSousGraphes[sommet.getId()].arcs.push_back(arc);
 					if (sommet.getId() != sommetDepart.getId()) 
@@ -153,11 +161,6 @@ Graph Graph::extractionGraph(Sommet sommetDepart, Vehicule vehicule)
 					}
 						
 					listeAutonomiesRestantes[sommet.getId()] = listeAutonomiesRestantes[sommetDistanceMaximale.getId()] - (arc.getDistance() * vehicule.getCoefficientPerte());
-					/*if (((arc.getSommetArrive()->getType() == vehicule.getType())
-						|| ((vehicule.getType() == "hybrid") && (arc.getSommetArrive()->getType() != "rien"))
-						|| (arc.getSommetArrive()->getType() == "hybrid"))
-						&& (arc.getSommetArrive()->getId() != sommetArrive.getId()))
-						listeAutonomiesRestantes[sommet.getId()] = 100;*/
 					
 				}
 			}
@@ -175,13 +178,14 @@ Graph Graph::extractionGraph(Sommet sommetDepart, Vehicule vehicule)
 	}
 	std::cout << std::endl;
 	std::cout <<  "Le parcours est : " << listeParcours[sommetMax] << std::endl 
-		<< "Le cout du chemin est : " << listeDistances[sommetMax] << std::endl << std::endl;
-		/*<< "L'autonomie restante du vehicule est : " << listeAutonomiesRestantes[sommetMax]<< std::endl */ 
+		<< "Le cout du chemin est : " << listeDistances[sommetMax] << std::endl << std::endl; 
 
 	return listeSousGraphes[sommetMax];
 
 }
 
+
+//Méthode qui permet d'afficher le plus court chemin entre deux sommets en tenant compte de l'autonomie du vehicule et les stations de recharges dans les sommets.
 void Graph::plusCourtChemin(Sommet sommetDepart, Sommet sommetArrive, Vehicule& vehicule)
 {
 	std::map<std::string, int> listeDistances;
@@ -212,7 +216,7 @@ void Graph::plusCourtChemin(Sommet sommetDepart, Sommet sommetArrive, Vehicule& 
 			fin = true;
 		for (Sommet sommet : sommets)
 		{
-			if ((sommetsVisites.find(sommet.getId()) == sommetsVisites.end()) && (sommetsVisites.size()!=1))
+			if (sommetsVisites.find(sommetArrive.getId()) == sommetsVisites.end())
 				fin = false;
 			else
 				fin = true;
