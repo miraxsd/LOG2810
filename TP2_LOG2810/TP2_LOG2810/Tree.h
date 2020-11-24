@@ -17,13 +17,13 @@ private:
 
     int height = 0;
 
-    Node* getChild(std::string value) {
+    /*Node* getChild(std::string value) {
         for (ValueType childValue : children) {
             if (childValue == value.r)
                 children.is
 
         }
-    }
+    }*/
 
 public:
     Node(ValueType value, Node<ValueType> parent, bool isLastChar)
@@ -32,8 +32,9 @@ public:
         this.parent = parent;
         this.isLastChar = isLastChar;
     }
-    ValueType getValue(){ return value; }
-    Vector<Node*<ValueType> getChildren(){ return children; }
+    ValueType getValue() { return value; }
+    Vector < Node* <ValueType> getChildren() { return children; }
+    bool getState() { return isLastChar; }
 };
 
 template <typename ValueType>
@@ -58,14 +59,14 @@ public:
     // Prend le noeud de départ et la valeur qu'il cherche.
     // Cherche la valeur dans les liste des enfants noeuds 
     // S'il le trouve il retourne le noeud qui contient la valeur
-    // Sinon il retourne le noeud ou on doit ajouter la valeur dans la liste de ses enfants
+    // Sinon il retourne le noeud dans laquelle on doit ajouter la valeur dans la liste de ses enfants
     public Node* getChild(Node* node, std::string value) {
-        while((node->getValue()!=value) && (!(node->getChildren().empty()))
+        while((node->getValue()!=value) && (node->getState()==true)  && (!(node->getChildren().empty()))
             for (Node<ValueType>* child : node.children) {
                 if (child->getValue() == value.substr(0, child->getValue().length()))
                 {
                     node = child;
-                    if (child->getValue().length() == value.length())
+                    if ((child->getValue().length() == value.length()) && (child->getState() == true))
                         return node;
                     value = value.substr(0,value.length()-1);
                 }
