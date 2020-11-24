@@ -13,14 +13,14 @@ private:
     ValueType value;
     bool isLastChar = false;
     Node<ValueType> parent; // Pointer to the node containing this node
-    Vector<Node* <ValueType>> children = null; // Pointer to the node on the left which should contain a value below this.value
+    vector<Node* <ValueType>> children = null; // Pointer to the node on the left which should contain a value below this.value
 
     int height = 0;
 
     Node* getChild(std::string value) {
         for (ValueType childValue : children) {
             if (childValue == value.r)
-
+                children.is
 
         }
     }
@@ -32,7 +32,8 @@ public:
         this.parent = parent;
         this.isLastChar = isLastChar;
     }
-    ValueType getValue{ return value; }
+    ValueType getValue(){ return value; }
+    Vector<Node*<ValueType> getChildren(){ return children; }
 };
 
 template <typename ValueType>
@@ -59,12 +60,17 @@ public:
     // S'il le trouve il retourne le noeud qui contient la valeur
     // Sinon il retourne le noeud ou on doit ajouter la valeur dans la liste de ses enfants
     public Node* getChild(Node* node, std::string value) {
-        Node* finalChild = null;
-        for (Node<ValueType>* child : children) {
-            if (child->getValue() == value.substr(0, child->getValue().length()))
-                finalChild=getChild(child, child->getValue().length() + 1);
+        while((node->getValue()!=value) && (!(node->getChildren().empty()))
+            for (Node<ValueType>* child : node.children) {
+                if (child->getValue() == value.substr(0, child->getValue().length()))
+                {
+                    node = child;
+                    if (child->getValue().length() == value.length())
+                        return node;
+                    value = value.substr(0,value.length()-1);
+                }
         }
-        return finalChild;
+        return node;
     }
 };
 
