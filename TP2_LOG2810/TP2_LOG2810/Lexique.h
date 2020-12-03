@@ -10,16 +10,25 @@
 #include <map>
 #include <set>
 
-std::vector<std::string> extraireLexique(std::string nomFichier);
+class Lexique {
 
-std::map<std::string, std::set<std::string>> creerLexique(std::string nomFichier);
+public :
 
-std::map<std::string, std::set<std::string>> creerAutomate(std::vector<std::string> listeMots);
+	std::vector<std::string> extraireLexique(std::string nomFichier);
 
-bool contientMot(std::map<std::string, std::set<std::string>> automate, std::string motRecherche);
+	std::map<std::string, std::set<std::string>> creerLexique(std::string nomFichier);
 
-std::set<std::string> trouverSuggestions(std::map<std::string, std::set<std::string>> automate, std::string motRecherche);
+	std::map<std::string, std::set<std::string>> creerAutomate(std::vector<std::string> listeMots);
 
-int creerVerif(std::string motSecret, std::string proposition);
+	bool contientMot(std::map<std::string, std::set<std::string>> automate, std::string motRecherche);
+
+	std::set<std::string> trouverSuggestions(std::map<std::string, std::set<std::string>> automate, std::string motRecherche);
+
+	int creerVerif(std::string motSecret, std::string proposition);
+
+	void printMap(std::map<std::string, std::set<std::string>> automate);
+
+};
+
 
 #endif

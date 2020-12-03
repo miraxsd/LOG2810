@@ -1,0 +1,7 @@
+﻿  Lexique.cpp
+C:\Users\Tahar\Desktop\PolyMtl\Session_A-20\LOG2810_v2\LOG2810_versionTP2_git\LOG2810\TP2_LOG2810\TP2_LOG2810\Lexique.cpp(26,21): warning C4018:  '<=' : incompatibilité signed/unsigned
+  Main.cpp
+  ModeJeu.cpp
+  Génération de code en cours...
+C:\Users\Tahar\Desktop\PolyMtl\Session_A-20\LOG2810_v2\LOG2810_versionTP2_git\LOG2810\TP2_LOG2810\TP2_LOG2810\Lexique.cpp(69,20): warning C4018:  '<' : incompatibilité signed/unsigned
+  TP2_LOG2810.vcxproj -> C:\Users\Tahar\Desktop\PolyMtl\Session_A-20\LOG2810_v2\LOG2810_versionTP2_git\LOG2810\TP2_LOG2810\TP2_LOG2810\Debug\TP2_LOG2810.exe
