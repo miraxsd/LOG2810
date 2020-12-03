@@ -13,11 +13,30 @@ int main() {
 		}
 	}*/
 
-	Lexique lexique;
-	std::vector<std::string> liste = lexique.extraireLexique("Lexique_1");
-	lexique.modeAuto(liste); 
+	/*Lexique lexique;
+	std::vector<std::string> liste1 = lexique.extraireLexique("Lexique_1");
+	//lexique.effacerListeMots();
+	//std::vector<std::string> liste2 = lexique.extraireLexique("Lexique_2");
+	std::map<std::string, std::set<std::string>> automate1;
+	automate1=lexique.creerAutomate();
+	lexique.printMap();
+
+	lexique.effacerListeMots();
+	lexique.effacerAutomate();
+
+	std::cout << "-------------------------------------------------------------" << std::endl << std::endl;
+
+	std::cout << "ON VIENT DE SUPPRIMER LA LISTE ET L'AUTOMATE" << std::endl << std::endl;
+
+	std::vector<std::string> liste2 = lexique.extraireLexique("Lexique_2");
+	std::map<std::string, std::set<std::string>> automate2;
+	automate2 = lexique.creerAutomate();
+	lexique.printMap();*/
+ 
+
+	//lexique.modeAuto(liste); 
 
 	//lexique.creerLexique("Lexique_1");
-	//lexique.printMap(lexique.creerLexique("Lexique_1"));
+	
 
 }

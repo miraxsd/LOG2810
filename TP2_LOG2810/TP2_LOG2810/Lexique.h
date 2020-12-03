@@ -18,19 +18,31 @@ public :
 
 	std::vector<std::string> extraireLexique(std::string nomFichier);
 
-	std::map<std::string, std::set<std::string>> creerLexique(std::string nomFichier);
+	//std::map<std::string, std::set<std::string>> creerLexique(std::string nomFichier);
 
-	std::map<std::string, std::set<std::string>> creerAutomate(std::vector<std::string> listeMots);
+	std::map<std::string, std::set<std::string>> creerAutomate(/*std::vector<std::string> listeMots*/);
 
 	void modeAuto(std::vector<std::string> listeMots);
 
-	bool contientMot(std::map<std::string, std::set<std::string>> automate, std::string motRecherche);
+	void modeVersus();
 
-	std::set<std::string> trouverSuggestions(std::map<std::string, std::set<std::string>> automate, std::string motRecherche);
+	bool contientMot(/*std::map<std::string, std::set<std::string>> automate,*/ std::string motRecherche);
+
+	std::set<std::string> trouverSuggestions(/*std::map<std::string, std::set<std::string>> automate,*/ std::string motRecherche);
 
 	int creerVerif(std::string motSecret, std::string proposition);
 
-	void printMap(std::map<std::string, std::set<std::string>> automate);
+	void printMap(/*std::map<std::string, std::set<std::string>> automate*/);
+
+	void effacerListeMots();
+
+	void effacerAutomate();
+
+private:
+
+	std::vector<std::string> listeMots_;
+
+	std::map<std::string, std::set<std::string>> automate_;
 
 };
 

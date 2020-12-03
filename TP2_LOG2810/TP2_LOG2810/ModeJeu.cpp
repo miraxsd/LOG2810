@@ -97,3 +97,27 @@ void Lexique::modeAuto(std::vector<std::string> listeMots) {
 
 
 }
+
+
+void Lexique::modeVersus() {
+
+	std::cout << "Premiere partie : Vous devez choisir le mot secret !" << std::endl << std::endl;
+
+	bool motChoisi = false;
+	std::string motJoueur1 = "undefined";
+	//tant qu'on a pas choisi le mot
+	while (motChoisi != true) {
+
+		std::cout << "Quel code ?" << std::endl << std::endl;
+
+		std::cin >> motJoueur1;
+		std::cout << std::endl << std::endl;
+
+		std::cout << "Suggestion(s) : " << std::endl << std::endl;
+
+		//if(contientMot)
+
+
+	}
+
+}
