@@ -10,6 +10,8 @@
 #include <map>
 #include <set>
 
+const int NB_ESSAIS_MAX = 15;
+
 class Lexique {
 
 public :
@@ -19,6 +21,8 @@ public :
 	std::map<std::string, std::set<std::string>> creerLexique(std::string nomFichier);
 
 	std::map<std::string, std::set<std::string>> creerAutomate(std::vector<std::string> listeMots);
+
+	void modeAuto(std::vector<std::string> listeMots);
 
 	bool contientMot(std::map<std::string, std::set<std::string>> automate, std::string motRecherche);
 

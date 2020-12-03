@@ -13,11 +13,11 @@ int main() {
 		}
 	}*/
 
-
-
 	Lexique lexique;
+	std::vector<std::string> liste = lexique.extraireLexique("Lexique_1");
+	lexique.modeAuto(liste); 
 
 	//lexique.creerLexique("Lexique_1");
-	lexique.printMap(lexique.creerLexique("Lexique_1"));
+	//lexique.printMap(lexique.creerLexique("Lexique_1"));
 
 }

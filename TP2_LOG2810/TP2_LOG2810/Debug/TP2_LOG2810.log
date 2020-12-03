@@ -1,7 +1,5 @@
-﻿  Lexique.cpp
-C:\Users\Tahar\Desktop\PolyMtl\Session_A-20\LOG2810_v2\LOG2810_versionTP2_git\LOG2810\TP2_LOG2810\TP2_LOG2810\Lexique.cpp(26,21): warning C4018:  '<=' : incompatibilité signed/unsigned
-  Main.cpp
-  ModeJeu.cpp
-  Génération de code en cours...
-C:\Users\Tahar\Desktop\PolyMtl\Session_A-20\LOG2810_v2\LOG2810_versionTP2_git\LOG2810\TP2_LOG2810\TP2_LOG2810\Lexique.cpp(69,20): warning C4018:  '<' : incompatibilité signed/unsigned
+﻿  ModeJeu.cpp
+C:\Users\Tahar\Desktop\PolyMtl\Session_A-20\LOG2810_v2\LOG2810_versionTP2_git\LOG2810\TP2_LOG2810\TP2_LOG2810\ModeJeu.cpp(13,20): warning C4018:  '<' : incompatibilité signed/unsigned
+C:\Users\Tahar\Desktop\PolyMtl\Session_A-20\LOG2810_v2\LOG2810_versionTP2_git\LOG2810\TP2_LOG2810\TP2_LOG2810\ModeJeu.cpp(19,20): warning C4018:  '<' : incompatibilité signed/unsigned
+C:\Users\Tahar\Desktop\PolyMtl\Session_A-20\LOG2810_v2\LOG2810_versionTP2_git\LOG2810\TP2_LOG2810\TP2_LOG2810\ModeJeu.cpp(30,12): warning C4244:  'argument' : conversion de 'time_t' en 'unsigned int', perte possible de données
   TP2_LOG2810.vcxproj -> C:\Users\Tahar\Desktop\PolyMtl\Session_A-20\LOG2810_v2\LOG2810_versionTP2_git\LOG2810\TP2_LOG2810\TP2_LOG2810\Debug\TP2_LOG2810.exe
