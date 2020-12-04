@@ -47,9 +47,12 @@ bool Lexique::contientMot(/*std::map<std::string, std::set<std::string>> automat
 
 	//retourne iterateur qui se trouve a la position du mot recherché
 	auto iterateur = automate_.find(motRecherche);
-	//si la valeur du mot qu'on cherche est présente dans l'automate, on retourne vrai 
-	if(iterateur->second.count(motRecherche)!= 0)
+
+	if (iterateur != automate_.end()) {
+		//si la valeur du mot qu'on cherche est présente dans l'automate, on retourne vrai 
+		if (iterateur->second.count(motRecherche) != 0)
 			return true;
+	}
 	return false;
 }
 
@@ -62,7 +65,11 @@ bool Lexique::contientMot(/*std::map<std::string, std::set<std::string>> automat
 
 
 std::set<std::string> Lexique::trouverSuggestions(/*std::map<std::string, std::set<std::string>> automate,*/ std::string motRecherche) {
-	return automate_.find(motRecherche)->second;
+	auto iter = automate_.find(motRecherche);
+	if (iter != automate_.end())
+		return automate_.find(motRecherche)->second;
+	else
+		return std::set<std::string>();
 }
 /*std::vector<std::string> trouverSuggestions(std::vector<std::string> listeMots, std::string motRecherche) {
 	std::vector<std::string> listeSuggestions;

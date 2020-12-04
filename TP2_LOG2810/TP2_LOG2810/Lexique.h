@@ -22,7 +22,9 @@ public :
 
 	std::map<std::string, std::set<std::string>> creerLexique(std::string nomFichier);
 
-	void modeAuto(std::vector<std::string> listeMots);
+	void partie2(std::string motSecret);
+
+	void modeAuto();
 
 	void modeVersus();
 
