@@ -34,9 +34,13 @@ int main() {
 	lexique.printMap();*/
  
 
-	//lexique.modeAuto(liste); 
+	 
 
 	//lexique.creerLexique("Lexique_1");
 	
-
+	Lexique lexique;
+	std::vector<std::string> liste1 = lexique.extraireLexique("Lexique_1");
+	//std::map<std::string, std::set<std::string>> automate = lexique.creerAutomate();
+	//lexique.printMap();
+	lexique.modeAuto(liste1);
 }

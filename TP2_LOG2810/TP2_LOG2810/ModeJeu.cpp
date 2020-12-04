@@ -1,35 +1,22 @@
 #include "Lexique.h"
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>       /* time */
+#include <cctype>		/*isalpha*/
 
 
-bool verifierMemeLettre(std::string phrase1, std::string phrase2) {
-
-	if (phrase1.size() != phrase2.size())
-		return false;
-	int count = 0;
-
-	// Take sum of all characters of first String
-	for (int i = 0; i < phrase1.size(); i++) {
-		count += phrase1[i];
+bool verifierAlpha(std::string phrase1) {
+	for (char caractere : phrase1) {
+		if (!(isalpha(caractere)))
+			return false;
 	}
-
-	// Subtract the Value of all the characters of second
-	// String
-	for (int i = 0; i < phrase2.size(); i++) {
-		count -= phrase2[i];
-	}
-
-	// If Count = 0 then they are anagram
-	// If count > 0 or count < 0 then they are not anagram
-	return (count == 0);
+	return true;
 }
 
 void Lexique::modeAuto(std::vector<std::string> listeMots) {
 
 	srand(time(NULL));
 
-	int indexSecret = rand() % (listeMots.size()) + 1;
+	int indexSecret = rand() % (listeMots.size()) ;
 
 	std::cout << "index :" << indexSecret << std::endl;
 
@@ -48,6 +35,8 @@ void Lexique::modeAuto(std::vector<std::string> listeMots) {
 
 	int nbEssais = 0;
 
+	int nbErreurs = 0;
+
 	while (nbEssais < NB_ESSAIS_MAX) {
 
 
@@ -55,44 +44,44 @@ void Lexique::modeAuto(std::vector<std::string> listeMots) {
 
 		std::cout << "votre choix ?" << std::endl;
 
-		std::cin >> choixUtilisateur; 
+		std::cin >> choixUtilisateur;
 
 		std::cout << std::endl;
 
-		bool ontMemesLettres = false;
+		bool enLettreAlpha = false;
 		//regarder s'ils ont la meme longueur
 		if (choixUtilisateur.size() == motSecret.size()) {
-			
+
 			//regarder s'il y a les memes lettres
-			ontMemesLettres = verifierMemeLettre(choixUtilisateur, motSecret);
-			if (ontMemesLettres == true) {
+			enLettreAlpha = verifierAlpha(choixUtilisateur);
+			if (enLettreAlpha == true) {
 				//si c le meme mot
 				if (choixUtilisateur == motSecret) {
 					std::cout << "Bravo !, vous avez trouve le mot en " << nbEssais + 1 << " essais";
 					break;
-				} 
+				}
 				//on dit que c pas le bon et on incremente le nb d'Essais
 				else {
 					std::cout << "Ce n'est pas le bon mot" << std::endl;
-					nbEssais++;
+					nbErreurs = creerVerif(motSecret, choixUtilisateur);
+					std::cout << "Le nombre d'erreurs est : " << nbErreurs << std::endl;
 				}
 
 			}
 			else {
-				std::cout << "Ils n'ont pas les mêmes lettres" << std::endl;
-				nbEssais++;
+				std::cout << "Le mot contient des caracteres non-alphabetiques" << std::endl;
 			}
-			
+
 		}
 		else {
 			std::cout << "Les mots n'ont pas la meme longueur" << std::endl;
-			nbEssais++;
 		}
-		
-	}
 
-	std::cout << "Le nombre d'essais maximum a ete atteint, le mot secret etait :"
-		<< motSecret;
+		nbEssais++;
+	}
+	if (nbEssais >= 15)
+		std::cout << "Le nombre d'essais maximum a ete atteint,";
+	std::cout << " le mot secret etait : " << motSecret;
 	std::cout << std::endl << std::endl;
 
 
