@@ -8,7 +8,6 @@ void Lexique::extraireLexique(std::string nomFichier) {
 		getline(fichier, mot);
 		listeMots_.push_back(mot);
 	}
-	
 }
 
 /*std::map<std::string, std::set<std::string>> Lexique::creerLexique(std::string nomFichier){

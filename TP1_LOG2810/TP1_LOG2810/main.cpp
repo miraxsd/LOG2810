@@ -80,6 +80,7 @@ void menuPrincipal() {
 			choixAchoisi = true;
 			vehicule = demanderCaracteristiques();
 			break;
+
 		case 'b':
 		case'B':
 			do {
