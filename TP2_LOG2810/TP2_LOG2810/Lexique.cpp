@@ -1,6 +1,6 @@
 #include "Lexique.h"
 
-std::vector<std::string> Lexique::extraireLexique(std::string nomFichier) {
+void Lexique::extraireLexique(std::string nomFichier) {
 	std::ifstream fichier(nomFichier + ".txt", std::ifstream::in);
 	std::string mot = "";
 	//std::vector<std::string> listeMots;
@@ -8,7 +8,7 @@ std::vector<std::string> Lexique::extraireLexique(std::string nomFichier) {
 		getline(fichier, mot);
 		listeMots_.push_back(mot);
 	}
-	return listeMots_;
+	
 }
 
 /*std::map<std::string, std::set<std::string>> Lexique::creerLexique(std::string nomFichier){
@@ -23,8 +23,9 @@ void Lexique::effacerAutomate() {
 	automate_.clear();
 }
 
-std::map<std::string, std::set<std::string>> Lexique::creerAutomate(/*std::vector<std::string> listeMots*/) {
+std::map<std::string, std::set<std::string>> Lexique::creerLexique(std::string nomFichier) {
 	//std::map<std::string, std::set<std::string>> automate;
+	extraireLexique(nomFichier);
 	auto iterateur = automate_.end();
 
 	//pour chaque mot de la liste 

@@ -16,11 +16,11 @@ class Lexique {
 
 public :
 
-	std::vector<std::string> extraireLexique(std::string nomFichier);
+	void extraireLexique(std::string nomFichier);
 
 	//std::map<std::string, std::set<std::string>> creerLexique(std::string nomFichier);
 
-	std::map<std::string, std::set<std::string>> creerAutomate(/*std::vector<std::string> listeMots*/);
+	std::map<std::string, std::set<std::string>> creerLexique(std::string nomFichier);
 
 	void modeAuto(std::vector<std::string> listeMots);
 
