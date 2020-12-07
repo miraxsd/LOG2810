@@ -1,14 +1,11 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////
-// main.cpp                                                                                    //
+// Main.cpp                                                                                    //
 // Ce fichier contient le code qui sera exécuté lorsque l'utilisateur utilisera le programme   //
 //Auteurs : Karim Gargouri, Omar Sadat, Samia Safaa                                            //
-////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include "Lexique.h"
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <string>
+
 
 using namespace std;
 
@@ -28,7 +25,7 @@ int main() {
 	bool option1choisie = false;
 
 	while (exit == false) {
-		std::cout << 
+		std::cout <<
 			"1. Initialisation du jeu \n"
 			"2. Partie contre l'ordinateur \n"
 			"3. Deux joueurs \n"
@@ -39,7 +36,7 @@ int main() {
 		invalide = false;
 		switch (choix) {
 		case '1':
-		
+
 			do {
 				if (invalide)
 					cout << "le fichier " << nomNouveauFichier << " est introuvable." << endl;
@@ -49,7 +46,7 @@ int main() {
 				std::cout << endl;
 				nouveauFichier.open(nomNouveauFichier + ".txt");
 			} while (!nouveauFichier.is_open());
-			//pour eviter que les lexiques s'accumulent entre eux
+			// Pour eviter que les lexiques s'accumulent entre eux
 			lexique.effacerListeMots();
 			lexique.effacerAutomate();
 			mapAutomate = lexique.creerLexique(nomNouveauFichier);

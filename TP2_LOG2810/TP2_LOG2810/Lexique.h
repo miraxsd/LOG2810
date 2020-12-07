@@ -1,8 +1,8 @@
-///////////////////////////////////////////////////////////
-//	Lexique.h                                            //
-// Ce fichier contient la définiton de la classe Lexique   //
-//Auteurs : Karim Gargouri, Omar Sadat, Samia Safaa		 //
-///////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
+//	Lexique.h                                             //
+// Ce fichier contient la définiton de la classe Lexique  //
+// Auteurs : Karim Gargouri, Omar Sadat, Samia Safaa	  //
+////////////////////////////////////////////////////////////
 #pragma once
 #ifndef LEXIQUE_H
 #define LEXIQUE_H 
@@ -14,16 +14,19 @@
 #include <vector>
 #include <map>
 #include <set>
+#include <stdlib.h>     /* srand, rand */
+#include <time.h>       /* time */
+#include <cctype>		/* isalpha */
+#include <iterator>
+
 
 const int NB_ESSAIS_MAX = 15;
 
 class Lexique {
 
-public :
+public:
 
 	void extraireLexique(std::string nomFichier);
-
-	//std::map<std::string, std::set<std::string>> creerLexique(std::string nomFichier);
 
 	std::map<std::string, std::set<std::string>> creerLexique(std::string nomFichier);
 
@@ -33,13 +36,13 @@ public :
 
 	void modeVersus();
 
-	bool contientMot(/*std::map<std::string, std::set<std::string>> automate,*/ std::string motRecherche);
+	bool contientMot(std::string motRecherche);
 
-	std::set<std::string> trouverSuggestions(/*std::map<std::string, std::set<std::string>> automate,*/ std::string motRecherche);
+	std::set<std::string> trouverSuggestions(std::string motRecherche);
 
 	int creerVerif(std::string motSecret, std::string proposition);
 
-	void printMap(/*std::map<std::string, std::set<std::string>> automate*/);
+	void printMap();
 
 	void effacerListeMots();
 
@@ -47,11 +50,12 @@ public :
 
 private:
 
+	// Un vecteur qui contient tous les mots du lexique
 	std::vector<std::string> listeMots_;
 
+	// Une map dont chaque élément a comme clef la première partie d'un mot en String.
+	// Pour chaque clef (première partie d'un mot) correspond une liste des mots qui commencent par la partie du mot dans la clef.
 	std::map<std::string, std::set<std::string>> automate_;
 
 };
-
-
 #endif
