@@ -1,3 +1,9 @@
+/////////////////////////////////////////////////////////////////////////////////////////////////
+// main.cpp                                                                                    //
+// Ce fichier contient le code qui sera exécuté lorsque l'utilisateur utilisera le programme   //
+//Auteurs : Karim Gargouri, Omar Sadat, Samia Safaa                                            //
+////////////////////////////////////////////////////////////////////////////////////////////////
+
 #include "Lexique.h"
 #include <iostream>
 #include <fstream>

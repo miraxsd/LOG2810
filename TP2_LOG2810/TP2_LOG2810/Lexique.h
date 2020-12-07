@@ -1,3 +1,8 @@
+///////////////////////////////////////////////////////////
+//	Lexique.h                                            //
+// Ce fichier contient la définiton de la classe Lexique   //
+//Auteurs : Karim Gargouri, Omar Sadat, Samia Safaa		 //
+///////////////////////////////////////////////////////////
 #pragma once
 #ifndef LEXIQUE_H
 #define LEXIQUE_H 

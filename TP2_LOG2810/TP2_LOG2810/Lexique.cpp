@@ -1,4 +1,13 @@
+////////////////////////////////////////////////////////////////////////
+// Lexique.cpp                                                        //
+// Ce fichier contient l'implémentation des méthodes du Lexique.h     //
+// Auteurs : Karim Gargouri, Omar Sadat, Samia Safaa                   //
+/////////////////////////////////////////////////////////////////////////
 #include "Lexique.h"
+
+
+//Cette méthode extrait tous les mots dans le fichier txt dont le nom est 
+//mis en paramètre et les ajoute dans la liste de mots listeMots_.
 
 void Lexique::extraireLexique(std::string nomFichier) {
 	std::ifstream fichier(nomFichier + ".txt", std::ifstream::in);
@@ -10,20 +19,18 @@ void Lexique::extraireLexique(std::string nomFichier) {
 	}
 }
 
-/*std::map<std::string, std::set<std::string>> Lexique::creerLexique(std::string nomFichier){
-	return creerAutomate(/*extraireLexique(nomFichier));
-}*/
-
+// Cette méthode vide la listeMots
 void Lexique::effacerListeMots() {
 	listeMots_.clear();
 }
 
+// Cette méthode vide automate_.
 void Lexique::effacerAutomate() {
 	automate_.clear();
 }
 
 std::map<std::string, std::set<std::string>> Lexique::creerLexique(std::string nomFichier) {
-	//std::map<std::string, std::set<std::string>> automate;
+	
 	extraireLexique(nomFichier);
 	auto iterateur = automate_.end();
 
@@ -41,8 +48,8 @@ std::map<std::string, std::set<std::string>> Lexique::creerLexique(std::string n
 	return automate_;
 }
 
-
-bool Lexique::contientMot(/*std::map<std::string, std::set<std::string>> automate,*/std::string motRecherche) {
+// Cette méthode retourne un booléen indiquant si un mot est contenu dans un lexique.
+bool Lexique::contientMot(std::string motRecherche) {
 
 	//retourne iterateur qui se trouve a la position du mot recherché
 	auto iterateur = automate_.find(motRecherche);
@@ -55,14 +62,10 @@ bool Lexique::contientMot(/*std::map<std::string, std::set<std::string>> automat
 	return false;
 }
 
-/*bool contientmot(std::vector<std::string> listeMots,std::string motRecherche) {
-	for (std::string mot : listeMots)
-		if (mot == motRecherche)
-			return true;
-	return false;
-}*/
 
 
+// Cette méthode retourne un set  composé des mots suggérés par le lexique. Ces mots commencent par la partie du mot précisé par 
+// la clé et sont contenus dans sa liste des mots.
 std::set<std::string> Lexique::trouverSuggestions(/*std::map<std::string, std::set<std::string>> automate,*/ std::string motRecherche) {
 	auto iter = automate_.find(motRecherche);
 	if (iter != automate_.end())
@@ -70,16 +73,9 @@ std::set<std::string> Lexique::trouverSuggestions(/*std::map<std::string, std::s
 	else
 		return std::set<std::string>();
 }
-/*std::vector<std::string> trouverSuggestions(std::vector<std::string> listeMots, std::string motRecherche) {
-	std::vector<std::string> listeSuggestions;
-	for (std::string mot : listeMots)
-		if (motRecherche.length() < mot.length())
-			if (mot.substr(0, mot.length()) == motRecherche)
-				listeSuggestions.push_back(mot);
-	return listeSuggestions;
-}*/
 
-//on compte les erreurs
+
+//Cette méthode retourne le nombre d'erreurs contenus dans la proposition
 int Lexique::creerVerif(std::string motSecret, std::string proposition) {
 	int erreurs = 0;
 	for (int i = 0; i < proposition.length() ;i++)
@@ -90,6 +86,8 @@ int Lexique::creerVerif(std::string motSecret, std::string proposition) {
 
 
 //------------AFFICHAGE -----------------------
+// Cette méthode affiche les éléments de la map ( de l’automate) ainsi que les listes 
+// des mots qui leurs correspondent. Elle nous a servi pour vérifier le bon fonctionnement du code
 
 void Lexique::printMap(/*std::map<std::string, std::set<std::string>> automate*/)
 {
